@@ -1,0 +1,13 @@
+.seoclick-forms .svg {
+  position: absolute;
+  width: 100%;
+  top: 2.625rem;
+  left: -1.875rem;
+  pointer-events: none; }
+.seoclick-forms .field-wrap:not(.submit-button-wrap) input, .seoclick-forms .field-wrap textarea {
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  font-weight: bold; }
+
+/*# sourceMappingURL=animated_form_styles.css.map */

@@ -1,0 +1,20 @@
+@import "_mixins";
+
+.seoclick-forms{
+  .svg{
+    position: absolute;
+    width: 100%;
+    top: 2.625rem;
+    left: -1.875rem;
+    pointer-events: none;
+  }
+  .field-wrap{
+
+    &:not(.submit-button-wrap) input, textarea{
+      border: none !important;
+      background: none !important;
+      box-shadow: none !important;
+      font-weight: bold;
+    }
+  }
+}

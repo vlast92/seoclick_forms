@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fieldset hidden="true" name="form_fields_modal" repeat="true">
+        <field name="type"
+               label="MOD_SEOCLICK_FORMS_FIELD_TYPE"
+               type="list"
+               multiple="false"
+               default="text">
+            <option value="text">MOD_SEOCLICK_FORMS_TEXTFIELD_TEXT_LABEL</option>
+            <option value="textarea">MOD_SEOCLICK_FORMS_TEXTFIELD_TEXTAREA_LABEL</option>
+            <option value="site">MOD_SEOCLICK_FORMS_TEXTFIELD_SITE_LABEL</option>
+            <option value="phone">MOD_SEOCLICK_FORMS_TEXTFIELD_PHONE_LABEL</option>
+            <option value="email">MOD_SEOCLICK_FORMS_TEXTFIELD_EMAIL_LABEL</option>
+            <option value="date">MOD_SEOCLICK_FORMS_TEXTFIELD_DATE_LABEL</option>
+            <option value="select">MOD_SEOCLICK_FORMS_TEXTFIELD_SELECT_LABEL</option>
+            <option value="line_text">MOD_SEOCLICK_FORMS_TEXTFIELD_LINETEXT_LABEL</option>
+            <option value="hidden">MOD_SEOCLICK_FORMS_TEXTFIELD_HIDDEN_LABEL</option>
+        </field>
+        <field name="select_options"
+               type="textarea"
+               rows="5"
+               label="MOD_SEOCLICK_FORMS_SELECT_OPTIONS_LABEL"
+               description="MOD_SEOCLICK_FORMS_SELECT_OPTIONS_DESCRIPTION"/>
+        <field
+                name="label"
+                type="text"
+                label="MOD_SEOCLICK_FORMS_FIELDSLABELS_LABEL"
+                description="MOD_SEOCLICK_FORMS_FIELDSLABELSR_DESCRIPTION"
+                size="50"/>
+        <field
+                name="mail_label"
+                type="text"
+                label="MOD_SEOCLICK_FORMS_MAIL_FILDSLABELS_LABEL"
+                description="MOD_SEOCLICK_FORMS_MAIL_FILDSLABELS_DESCRIPTION"
+                size="50"/>
+        <field name="required"
+               type="checkbox"
+               label="MOD_SEOCLICK_FORMS_REQUIRED_LABEL"
+               description="MOD_SEOCLICK_FORMS_REQUIRED_DESCRIPTION"
+               value="1"
+               default="0"/>
+        <field
+                name="placeholder"
+                type="text"
+                label="MOD_SEOCLICK_FORMS_PLACEHOLDER_LABEL"
+                description="MOD_SEOCLICK_FORMS_PLACEHOLDER_DESCRIPTION"
+                size="50"/>
+        <field name="maxlength"
+               type="number"
+               default="100"
+               label="MOD_SEOCLICK_FORMS_MAX_LENGTH_LABEL"
+               description="MOD_SEOCLICK_FORMS_MAX_LENGTH_DESCRIPTION"
+               min="1"
+               max="1000"
+               step="1"
+               size="4"/>
+        <field name="css"
+               type="text"
+               label="MOD_SEOCLICK_FORMS_CSS_CLASS" />
+    </fieldset>
+</form>
