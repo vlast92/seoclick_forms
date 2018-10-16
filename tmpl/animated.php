@@ -9,11 +9,11 @@
  */
 defined('_JEXEC') or die;
 
-$document->addStyleSheet('/modules/mod_seoclick_forms/assets/css/animated_form_styles.min.css?v='
-	. filemtime($_SERVER['DOCUMENT_ROOT'] . '/modules/mod_seoclick_forms/assets/css/animated_form_styles.min.css'));
-$document->addScript('/modules/mod_seoclick_forms/assets/js/anime.min.js');
-$document->addScript('/modules/mod_seoclick_forms/assets/js/seoclick-animated-form.min.js?v='
-	. filemtime($_SERVER['DOCUMENT_ROOT'] . '/modules/mod_seoclick_forms/assets/js/seoclick-animated-form.min.js'));
+$document->addStyleSheet($module_assets . '/css/animated_form_styles.min.css?v='
+	. filemtime($_SERVER['DOCUMENT_ROOT'] . $module_assets . '/css/animated_form_styles.min.css'));
+$document->addScript($module_assets . '/js/anime.min.js');
+$document->addScript($module_assets . '/js/seoclick-animated-form.min.js?v='
+	. filemtime($_SERVER['DOCUMENT_ROOT'] . $module_assets . '/js/seoclick-animated-form.min.js'));
 
 $key = 0;
 
@@ -116,6 +116,6 @@ if ($phoneMask)
 	        $("#'.$form_id.'").find("[data-validate = \'phone\']").mask("' . $phoneMask . '");
 	    });';
 
-	$document->addScript('/modules/mod_seoclick_forms/assets/js/jquery.maskedinput-1.2.2.min.js');
+	$document->addScript($module_assets . '/js/jquery.maskedinput-1.2.2.min.js');
 	$document->addScriptDeclaration($script);
 }

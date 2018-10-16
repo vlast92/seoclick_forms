@@ -106,6 +106,6 @@ if ($phoneMask)
 	        $("#'.$form_id.'").find("[data-validate = \'phone\']").mask("' . $phoneMask . '");
 	    });';
 
-	$document->addScript('/modules/mod_seoclick_forms/assets/js/jquery.maskedinput-1.2.2.min.js');
+	$document->addScript($module_assets . '/js/jquery.maskedinput-1.2.2.min.js');
 	$document->addScriptDeclaration($script);
 }

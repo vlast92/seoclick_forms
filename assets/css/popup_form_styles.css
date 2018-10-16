@@ -10,10 +10,11 @@
   -moz-flex-flow: row wrap;
   flex-flow: row wrap; }
 
+.seoclickFormsShowpopUpForm {
+  cursor: pointer; }
+
 .seoclick-forms-popup-wrap {
   padding: 0; }
-  .seoclick-forms-popup-wrap .seoclickFormsShowpopUpForm {
-    cursor: pointer; }
   .seoclick-forms-popup-wrap .container {
     box-sizing: border-box;
     overflow-x: hidden;
@@ -74,6 +75,7 @@
     -o-transform: scale(1) !important;
     transform: scale(1) !important; }
   .seoclick-forms-popup-wrap .close-button {
+    box-sizing: border-box;
     width: 1.875rem;
     height: 1.875rem;
     text-align: center;
