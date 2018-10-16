@@ -7,7 +7,6 @@
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  * @link       https://seoclick.by
  */
-//TODO добавить скрытый тип поля
 defined('_JEXEC') or die;
 
 require_once dirname(__FILE__) . '/helper.php';
