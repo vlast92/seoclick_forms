@@ -22,13 +22,27 @@ class ModSeoclickFormsHelper
 	 */
 	public static function getAjax()
 	{
+		JLog::addLogger(
+			array(
+				'text_file' => 'mod_seoclick_forms.log.php'
+			),
+			JLog::ALL,
+			array('mod_seoclick_forms')
+		);
+
 		self::$formData = $_POST["data"];
 
 		self::getModuleParams();
 
-		if (!self::checkCaptchaResponse()) return JText::_("MOD_SEOCLICK_FORM_CAPTCHA_ERROR");
+		if (!self::checkCaptchaResponse()){
+			JLog::add(JText::_('MOD_SEOCLICK_FORM_CAPTCHA_ERROR'), JLog::ERROR, 'mod_seoclick_forms');
+			return JText::_("MOD_SEOCLICK_FORM_CAPTCHA_ERROR");
+		}
 
-		if (!self::getEmail()) return JText::_("MOD_SEOCLICK_FORMS_NO_EMAIL");
+		if (!self::getEmail()){
+			JLog::add(JText::_('MOD_SEOCLICK_FORMS_NO_EMAIL'), JLog::ERROR, 'mod_seoclick_forms');
+			return JText::_("MOD_SEOCLICK_FORMS_NO_EMAIL");
+		}
 
 		$response = self::sendEmail();
 
@@ -95,14 +109,16 @@ class ModSeoclickFormsHelper
 	}
 
 	/*
-	 * TODO Добавить логирование ошибок
 	 * Функция отправки почты.
 	 * Возвращает строку со статусом выполнения.
 	 */
 	private static function sendEmail()
 	{
 		$messageContent = self::getMessageContent();
-		if (!$messageContent) return JText::_("MOD_SEOCLICK_FORM_VALIDATION_ERROR");
+		if (!$messageContent) {
+			JLog::add(JText::_('MOD_SEOCLICK_FORM_VALIDATION_ERROR'), JLog::ERROR, 'mod_seoclick_forms');
+			return JText::_("MOD_SEOCLICK_FORM_VALIDATION_ERROR");
+		}
 
 		$from     = self::$moduleParams->get("mailfrom", "noreply@domain.com");
 		$fromName = self::$moduleParams->get("mailfromname", "Site");
@@ -114,7 +130,10 @@ class ModSeoclickFormsHelper
 		$headers      = "Content-type: text/html; charset=utf-8 \r\n";
 		$headers      .= "From: " . $fromName . " <" . $from . ">\r\n";
 
-		if (!mail(self::$email, $subject, $message, $headers)) return JText::_("MOD_SEOCLICK_FORM_SENDING_ERROR");
+		if (!mail(self::$email, $subject, $message, $headers)){
+			JLog::add(JText::_('MOD_SEOCLICK_FORM_SENDING_ERROR'), JLog::ERROR, 'mod_seoclick_forms');
+			return JText::_("MOD_SEOCLICK_FORM_SENDING_ERROR");
+		}
 
 		return JText::_("MOD_SEOCLICK_FORMS_SUCCESS");
 	}
