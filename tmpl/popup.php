@@ -16,7 +16,7 @@ $document->addScript('/modules/mod_seoclick_forms/assets/js/popup.min.js?v='
     .filemtime($_SERVER['DOCUMENT_ROOT'] . '/modules/mod_seoclick_forms/assets/js/popup.min.js'));
 
 $key = 0;
-
+//TODO сделать вызов формы по ее id
 $form_id = "seoclick-form_". rand(1, 9999999);
 ?>
 <div id="<?=$form_id?>" class="seoclick-forms seoclick-forms-popup-wrap <?= $moduleclass_sfx; ?>">
