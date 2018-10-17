@@ -30,7 +30,11 @@ $form_id = "seoclick-form_" . rand(1, 9999999);
 					<?php $name = "form_fields" . $key++; ?>
                     <div class="field-wrap">
 						<?php if ($formField['label']): ?>
-                        <label><span class="fieldName"><?= $formField['label']; ?></span>
+                        <label>
+                            <span class="fieldName">
+                                <?= $formField['label']; ?>
+	                            <?php if ($formField['required']): ?><span class="required">*</span><?php endif;?>
+                            </span>
 							<?php endif; ?>
 							<?php if ($formField['type'] == "textarea"): ?>
                                 <textarea

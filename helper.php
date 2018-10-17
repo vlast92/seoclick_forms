@@ -155,8 +155,8 @@ class ModSeoclickFormsHelper
 				continue;
 			}
 
-			$formField = self::checkData($formField, $field_params['type'], $field_params['maxlength']);
-			if (!$formField && $field_params['type'] != 'line_text') return false;
+			$formField = self::checkData($formField, $field_params['type'], $field_params['maxlength'], $field_params['pattern']);
+			if (!$formField) return false;
 
 			$mailLabel = $field_params['mail_label'];
 
@@ -173,38 +173,40 @@ class ModSeoclickFormsHelper
 
 	/*
 	 * Функция проверки данных.
-	 * Функция получает поле формы ,его тип и максимум символов.
+	 * Функция получает поле формы ,его тип, максимум символов и регулярное выражение.
 	 * Возвращает отформатированую строку либо false
 	 */
-	private static function checkData($data, $type, $maxLength)
+	private static function checkData($data, $type, $maxLength, $pattern)
 	{
-		switch ($type)
-		{
-			case "site":
-				$pattern = self::$sitePattern;
-				break;
-			case "phone":
-				$pattern = self::$phonePattern;
-				break;
-			case "email":
-				$pattern = self::$emailPattern;
-				break;
-			case "line_text":
-				$data = self::clearData($data);
-				return $data;
-				break;
-			default:
-				$pattern = false;
+		if(empty($pattern)){
+			switch ($type)
+			{
+				case "site":
+					$pattern = self::$sitePattern;
+					break;
+				case "phone":
+					$pattern = self::$phonePattern;
+					break;
+				case "email":
+					$pattern = self::$emailPattern;
+					break;
+				case "line_text":
+					$data = self::clearData($data);
+					return $data;
+				default:
+					$pattern = false;
+			}
+		}else{
+			$pattern = '/'.$pattern.'/';
 		}
 
 		if (strlen($data) > $maxLength) return false;
 
-		if (!$pattern) return $data = self::clearData($data);
-
-		if (!preg_match($pattern, $data) || empty($data)) return false;
+		if ($pattern && !preg_match($pattern, $data)) return false;
 
 		return $data = self::clearData($data);
 	}
+
 	private static function clearData($data){
 
 		$data = htmlspecialchars($data);

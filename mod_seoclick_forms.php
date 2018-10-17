@@ -20,7 +20,7 @@ if ($params->get("load_styles"))
 		.filemtime($_SERVER['DOCUMENT_ROOT'] . $module_assets .'/css/seoclick_forms_styles.min.css'));
 }
 JHtml::_('jquery.framework');
-$document->addScript($module_assets . '/js/seoclick_forms.min.js?v='
+$document->addScript($module_assets . '/js/seoclick_forms.js?v='
 	.filemtime($_SERVER['DOCUMENT_ROOT'] . $module_assets . '/js/seoclick_forms.min.js'));
 
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
