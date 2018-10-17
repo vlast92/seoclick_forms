@@ -39,8 +39,16 @@ $form_id = "seoclick-form_" . rand(1, 9999999);
 							<?php if ($formField['type'] == "textarea"): ?>
                                 <textarea
                                         maxlength="<?= $formField['maxlength']; ?>"
+	                                <?php if ($formField['validation']): ?>
                                         class="validate"
                                         data-validate="<?= $formField['type']; ?>"
+		                                <?php if ($formField['pattern']): ?>
+                                            pattern="<?= $formField['pattern'] ?>"
+		                                <?php endif; ?>
+		                                <?php if ($formField['tooltip']): ?>
+                                            data-tooltip="<?=$formField['tooltip']?>"
+		                                <?php endif; ?>
+	                                <?php endif; ?>
                                         name="<?= $name; ?>"
 									<?php if ($formField['required']): ?>
                                         required=""
@@ -60,8 +68,16 @@ $form_id = "seoclick-form_" . rand(1, 9999999);
 							<?php else: ?>
                                 <input
                                         maxlength="<?= $formField['maxlength']; ?>"
+	                                <?php if ($formField['validation']): ?>
                                         class="validate"
                                         data-validate="<?= $formField['type']; ?>"
+		                                <?php if ($formField['pattern']): ?>
+                                            pattern="<?= $formField['pattern'] ?>"
+		                                <?php endif; ?>
+		                                <?php if ($formField['tooltip']): ?>
+                                            data-tooltip="<?=$formField['tooltip']?>"
+		                                <?php endif; ?>
+	                                <?php endif; ?>
                                         name="<?= $name; ?>"
 									<?php if ($formField['required']): ?>
                                         required=""
