@@ -65,6 +65,8 @@ $form_id = "seoclick-form_". rand(1, 9999999);
                                     type="email"
                                 <?php elseif($formField['type'] == "date"):?>
                                     type="date"
+								<?php elseif($formField['type'] == "hidden"):?>
+                                    type="hidden"
 								<?php else: ?>
                                     type="text"
 								<?php endif; ?>
@@ -112,6 +114,6 @@ if ($phoneMask)
 	        $("#'.$form_id.'").find("[data-validate = \'phone\']").mask("' . $phoneMask . '");
 	    });';
 
-	$document->addScript('/modules/mod_seoclick_forms/assets/js/jquery.maskedinput-1.2.2.min.js');
+	$document->addScript($module_assets . '/js/jquery.maskedinput-1.2.2.min.js');
 	$document->addScriptDeclaration($script);
 }

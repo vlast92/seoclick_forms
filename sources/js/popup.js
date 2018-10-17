@@ -1,10 +1,7 @@
-"use strict";
-
 jQuery(document).ready(function ($) {
 
-    var formContainer = $(".seoclick-forms-popup-wrap"),
-        //контейнер формы
-    show_button = $(".seoclickFormsShowpopUpForm"); //кнопка показа формы
+    let formContainer = $(".seoclick-forms-popup-wrap"),//контейнер формы
+        show_button = $(".seoclickFormsShowpopUpForm");//кнопка показа формы
 
     formContainer.find("form").wrap('<div class="modal-wrap"></div>').append('<span class="close-button">X</span>');
     $(".modal-wrap").append('<div class="close-background"></div>');
@@ -14,7 +11,7 @@ jQuery(document).ready(function ($) {
     //обработчик кнопок вызова форм
     show_button.on("click", function () {
 
-        var form = $('#' + $(this).data('form'));
+        let form = $('#' + $(this).data('form'));
         form.find("form").toggleClass("active").closest(".modal-wrap").toggleClass("active").find(".close-background").toggleClass("active");
         $('body').css('overflow-y', 'hidden');
     });
@@ -32,4 +29,3 @@ jQuery(document).ready(function ($) {
         }, 300);
     }
 });
-//# sourceMappingURL=popup.js.map

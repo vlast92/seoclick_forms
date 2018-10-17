@@ -1,11 +1,11 @@
 @import "_mixins";
 
+.seoclickFormsShowpopUpForm{
+  cursor: pointer;
+}
 .seoclick-forms-popup-wrap{
   padding: 0;
 
-  .seoclickFormsShowpopUpForm{
-    cursor: pointer;
-  }
   .container{
     box-sizing: border-box;
     overflow-x: hidden;
@@ -58,6 +58,7 @@
     @include transform(scale(1) !important);
   }
   .close-button{
+    box-sizing: border-box;
     width: 1.875rem;
     height: 1.875rem;
     text-align: center;

@@ -7,20 +7,21 @@
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  * @link       https://seoclick.by
  */
-//TODO добавить скрытый тип поля
 defined('_JEXEC') or die;
 
 require_once dirname(__FILE__) . '/helper.php';
 
+$module_assets = '/modules/mod_seoclick_forms/assets';
+
 $document = JFactory::getDocument();
 if ($params->get("load_styles"))
 {
-	$document->addStyleSheet('/modules/mod_seoclick_forms/assets/css/seoclick_forms_styles.min.css?v='
-		.filemtime($_SERVER['DOCUMENT_ROOT'] . '/modules/mod_seoclick_forms/assets/css/seoclick_forms_styles.min.css'));
+	$document->addStyleSheet($module_assets.'/css/seoclick_forms_styles.min.css?v='
+		.filemtime($_SERVER['DOCUMENT_ROOT'] . $module_assets .'/css/seoclick_forms_styles.min.css'));
 }
 JHtml::_('jquery.framework');
-$document->addScript('/modules/mod_seoclick_forms/assets/js/seoclick_forms.min.js?v='
-	.filemtime($_SERVER['DOCUMENT_ROOT'] . '/modules/mod_seoclick_forms/assets/js/seoclick_forms.min.js'));
+$document->addScript($module_assets . '/js/seoclick_forms.js?v='
+	.filemtime($_SERVER['DOCUMENT_ROOT'] . $module_assets . '/js/seoclick_forms.min.js'));
 
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 $joomlaRecapcha  = $params->get("joomla_recapcha");

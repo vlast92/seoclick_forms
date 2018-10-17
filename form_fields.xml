@@ -39,6 +39,23 @@
                description="MOD_SEOCLICK_FORMS_REQUIRED_DESCRIPTION"
                value="1"
                default="0"/>
+        <field name="validation"
+               type="checkbox"
+               label="MOD_SEOCLICK_FORMS_VALIDATION_LABEL"
+               description="MOD_SEOCLICK_FORMS_VALIDATION_DESCRIPTION"
+               value="1"
+               default="0"/>
+        <field name="pattern"
+               type="text"
+               label="MOD_SEOCLICK_FORMS_PATTERN_LABEL"
+               description="MOD_SEOCLICK_FORMS_PATTERN_DESCRIPTION"
+               size="100"/>
+        <field name="tooltip"
+               type="textarea"
+               rows="5"
+               label="MOD_SEOCLICK_FORMS_TOOLTIP_LABEL"
+               description="MOD_SEOCLICK_FORMS_TOOLTIP_DESCRIPTION"
+               size="100"/>
         <field
                 name="placeholder"
                 type="text"
@@ -56,6 +73,6 @@
                size="4"/>
         <field name="css"
                type="text"
-               label="MOD_SEOCLICK_FORMS_CSS_CLASS" />
+               label="MOD_SEOCLICK_FORMS_CSS_CLASS"/>
     </fieldset>
 </form>

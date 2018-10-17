@@ -1,10 +1,13 @@
 jQuery(document).ready(function ($) {
-    /*TODO сделать сообщения о валидации*/
+
     let inputs,
         sitePattern = "^[\\w \\.]+[\\.]{1}[\\D]{2,4}$",
         phonePattern = "^[\\d \\+]{1,5}[\\( \\d \\) \\s]{1,10}[-?\\d \\s]+$",
         emailPattern = "^[\\w \\.]+[@]{1}[\\w]+[\\.]{1}[\\D]{2,4}$",
-        forms = $(".form-validate");
+        forms = $(".form-validate"),
+        default_site_tooltip_text = "Адрес должен быть в формате site.ru",
+        default_email_tooltip_text = "Email должен быть в формате почта@mail.ru",
+        default_phone_tooltip_text = "Телефон должен быть в формате +код страны(код оператора)номер телефона. Например +375(33)123-45-67";
 
     $.each(forms, function (index, form) {
 
@@ -17,40 +20,133 @@ jQuery(document).ready(function ($) {
         $(form).on("submit", sendData);
     });
 
+    /*
+    * Функция проверяет атрибуты pattern и data-tooltip
+    * и в случае их отсутсвия присваивает им значения
+    * по умолчанию при их наличии и возвращает true
+    * иначе false
+    * */
+    function checkInputPatterns(input, def_pattern, def_tooltip_text) {
+
+        let pattern = input.attr("pattern"),
+            tooltip = input.data("tooltip"),
+            response = {pattern: false, tooltip: false};
+
+        if (pattern === undefined) {
+            if (def_pattern !== undefined) {
+                input.attr("pattern", def_pattern);
+                response.pattern = true;
+            } else {
+                response.pattern = false;
+            }
+        } else {
+            response.pattern = true;
+        }
+
+        if (tooltip === undefined) {
+            if (def_tooltip_text !== undefined) {
+                input.data("tooltip", def_tooltip_text);
+                response.tooltip = true;
+            } else {
+                response.tooltip = false;
+            }
+        } else {
+            response.tooltip = true;
+        }
+
+        return response;
+    }
+
+    /*
+    * Функция управления подсказками
+    * */
+    function tooltip(input, command) {
+
+        switch (command) {
+            case 'create':
+                input.after("<div class='invalid-tooltip'><div>" + input.data("tooltip") + "</div></div>");
+                input.next().hide();
+                break;
+            case 'show':
+                input.next().show();
+                input.next().animate({
+                    opacity: 1
+                }, 300, () => {
+                    input.next().show();
+                });
+                break;
+            case 'hide':
+                input.next().animate({
+                    opacity: 0
+                }, 300, () => {
+                    input.next().hide();
+                });
+                break;
+        }
+    }
+
     //функция установки обработчиков полей формы
     function setEvents(inputs) {
 
         $.each(inputs, function (index, input) {
 
-            let name = $(input).attr("data-validate");
+            let input_obj = $(input),
+                data_type = input_obj.attr("data-validate"),
+                validation;
 
             //устанавливвваем шаблоны для полей формы
-            switch (name) {
+            switch (data_type) {
                 case "site":
-                    $(input).attr("pattern", sitePattern);
+                    validation = checkInputPatterns(input_obj, sitePattern, default_site_tooltip_text);
                     break;
                 case "email":
-                    $(input).attr("pattern", emailPattern);
+                    validation = checkInputPatterns(input_obj, emailPattern, default_email_tooltip_text);
                     break;
                 case "phone":
-                    $(input).attr("pattern", phonePattern);
-                    $(input).on("paste", checkPasteText);
-                    $(input).on("keypress", checkPressedKey);
+                    validation = checkInputPatterns(input_obj, phonePattern, default_phone_tooltip_text);
+                    input_obj.on("paste", checkPasteText);
+                    input_obj.on("keypress", checkPressedKey);
                     break;
                 default:
-                    return true;
+                    validation = checkInputPatterns(input_obj);
+                    if (!validation.tooltip && !validation.pattern) return true;
+            }
+            if (validation.tooltip) {
+                tooltip(input_obj, 'create');
+                input_obj.on("mouseenter", function () {
+                    tooltip(input_obj, 'show');
+                });
+                input_obj.on("focusout mouseleave", function () {
+
+                    tooltip(input_obj, 'hide');
+                });
             }
             //устанавливаем обработчик на проверку вводимых данных
-            $(input).on("focusin change keyup", function () {
+            if (validation.pattern) {
+                input_obj.on("change keyup", function () {
 
-                checkPattern($(this));
-            });
+                    let check = checkPattern($(this));
+
+                    if (validation.tooltip) {
+                        if (!check) {
+                            tooltip(input_obj, 'show');
+                        } else {
+                            tooltip(input_obj, 'hide');
+                        }
+                    }
+                });
+                input_obj.on("focusout mouseleave", function () {
+
+                    if (input_obj.val() === '') {
+                        input_obj.removeClass('invalid');
+                    }
+                });
+            }
         });
     }
 
     //функция проверки вставленные данные в поле формы по шаблону
     function checkPasteText(event) {
-        console.log(event);
         let pattern,
             data = event.originalEvent.clipboardData.getData('text/plain');
 
@@ -115,9 +211,9 @@ jQuery(document).ready(function ($) {
     */
     function checkPattern(inputData) {
 
-        let value = $(inputData).val(), pattern;
+        let value = inputData.val(), pattern;
 
-        pattern = getPattern(inputData);
+        pattern = new RegExp(inputData.attr("pattern"));
 
         //проверка данных по шаблону
         if (!pattern.test(value)) {
@@ -127,29 +223,6 @@ jQuery(document).ready(function ($) {
             inputData.removeClass("invalid");
             return true;
         }
-    }
-
-    //Функция возвращает RegExp объект для переданного поля формы
-    function getPattern(inputData) {
-
-        let pattern;
-
-        //создание RegExp объекта из шаблона
-        switch ($(inputData).attr("data-validate")) {
-            case "phone":
-                pattern = new RegExp(phonePattern);
-                break;
-            case "email":
-                pattern = new RegExp(emailPattern);
-                break;
-            case "site":
-                pattern = new RegExp(sitePattern);
-                break;
-            default:
-                return 0;
-        }
-
-        return pattern;
     }
 
     //функция отправки данных на сервер
@@ -165,11 +238,11 @@ jQuery(document).ready(function ($) {
         data = objectifyFormData(data);
 
         messageBox.addClass("active");
-        if($(formContainer).hasClass("seoclick-forms-popup-wrap")){
+        if ($(formContainer).hasClass("seoclick-forms-popup-wrap")) {
             $(formContainer).find(".container").animate({
                 scrollTop: 0
             }, 300);
-        }else{
+        } else {
             $('html, body').animate({
                 scrollTop: formContainer.offset().top - 200
             }, 300);

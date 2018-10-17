@@ -9,11 +9,11 @@
  */
 defined('_JEXEC') or die;
 
-$document->addStyleSheet('/modules/mod_seoclick_forms/assets/css/animated_form_styles.min.css?v='
-	. filemtime($_SERVER['DOCUMENT_ROOT'] . '/modules/mod_seoclick_forms/assets/css/animated_form_styles.min.css'));
-$document->addScript('/modules/mod_seoclick_forms/assets/js/anime.min.js');
-$document->addScript('/modules/mod_seoclick_forms/assets/js/seoclick-animated-form.min.js?v='
-	. filemtime($_SERVER['DOCUMENT_ROOT'] . '/modules/mod_seoclick_forms/assets/js/seoclick-animated-form.min.js'));
+$document->addStyleSheet($module_assets . '/css/animated_form_styles.min.css?v='
+	. filemtime($_SERVER['DOCUMENT_ROOT'] . $module_assets . '/css/animated_form_styles.min.css'));
+$document->addScript($module_assets . '/js/anime.min.js');
+$document->addScript($module_assets . '/js/seoclick-animated-form.min.js?v='
+	. filemtime($_SERVER['DOCUMENT_ROOT'] . $module_assets . '/js/seoclick-animated-form.min.js'));
 
 $key = 0;
 
@@ -29,7 +29,11 @@ $form_id = "seoclick-form_". rand(1, 9999999);
 			<?php $name = "form_fields".$key++;?>
             <div class="field-wrap">
 				<?php if ($formField['label']): ?>
-                <label><span class="fieldName"><?= $formField['label']; ?></span>
+                <label>
+                    <span class="fieldName">
+                        <?= $formField['label']; ?>
+	                    <?php if ($formField['required']): ?><span class="required">*</span><?php endif;?>
+                    </span>
 					<?php endif; ?>
 					<?php if ($formField['type'] == "textarea"): ?>
                         <textarea
@@ -65,6 +69,8 @@ $form_id = "seoclick-form_". rand(1, 9999999);
                                 type="email"
 							<?php elseif($formField['type'] == "date"):?>
                                 type="date"
+							<?php elseif($formField['type'] == "hidden"):?>
+                                type="hidden"
 							<?php else: ?>
                                 type="text"
 							<?php endif; ?>
@@ -116,6 +122,6 @@ if ($phoneMask)
 	        $("#'.$form_id.'").find("[data-validate = \'phone\']").mask("' . $phoneMask . '");
 	    });';
 
-	$document->addScript('/modules/mod_seoclick_forms/assets/js/jquery.maskedinput-1.2.2.min.js');
+	$document->addScript($module_assets . '/js/jquery.maskedinput-1.2.2.min.js');
 	$document->addScriptDeclaration($script);
 }

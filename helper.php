@@ -22,13 +22,27 @@ class ModSeoclickFormsHelper
 	 */
 	public static function getAjax()
 	{
+		JLog::addLogger(
+			array(
+				'text_file' => 'mod_seoclick_forms.log.php'
+			),
+			JLog::ALL,
+			array('mod_seoclick_forms')
+		);
+
 		self::$formData = $_POST["data"];
 
 		self::getModuleParams();
 
-		if (!self::checkCaptchaResponse()) return JText::_("MOD_SEOCLICK_FORM_CAPTCHA_ERROR");
+		if (!self::checkCaptchaResponse()){
+			JLog::add(JText::_('MOD_SEOCLICK_FORM_CAPTCHA_ERROR'), JLog::ERROR, 'mod_seoclick_forms');
+			return JText::_("MOD_SEOCLICK_FORM_CAPTCHA_ERROR");
+		}
 
-		if (!self::getEmail()) return JText::_("MOD_SEOCLICK_FORMS_NO_EMAIL");
+		if (!self::getEmail()){
+			JLog::add(JText::_('MOD_SEOCLICK_FORMS_NO_EMAIL'), JLog::ERROR, 'mod_seoclick_forms');
+			return JText::_("MOD_SEOCLICK_FORMS_NO_EMAIL");
+		}
 
 		$response = self::sendEmail();
 
@@ -95,14 +109,16 @@ class ModSeoclickFormsHelper
 	}
 
 	/*
-	 * TODO Добавить логирование ошибок
 	 * Функция отправки почты.
 	 * Возвращает строку со статусом выполнения.
 	 */
 	private static function sendEmail()
 	{
 		$messageContent = self::getMessageContent();
-		if (!$messageContent) return JText::_("MOD_SEOCLICK_FORM_VALIDATION_ERROR");
+		if (!$messageContent) {
+			JLog::add(JText::_('MOD_SEOCLICK_FORM_VALIDATION_ERROR'), JLog::ERROR, 'mod_seoclick_forms');
+			return JText::_("MOD_SEOCLICK_FORM_VALIDATION_ERROR");
+		}
 
 		$from     = self::$moduleParams->get("mailfrom", "noreply@domain.com");
 		$fromName = self::$moduleParams->get("mailfromname", "Site");
@@ -114,7 +130,10 @@ class ModSeoclickFormsHelper
 		$headers      = "Content-type: text/html; charset=utf-8 \r\n";
 		$headers      .= "From: " . $fromName . " <" . $from . ">\r\n";
 
-		if (!mail(self::$email, $subject, $message, $headers)) return JText::_("MOD_SEOCLICK_FORM_SENDING_ERROR");
+		if (!mail(self::$email, $subject, $message, $headers)){
+			JLog::add(JText::_('MOD_SEOCLICK_FORM_SENDING_ERROR'), JLog::ERROR, 'mod_seoclick_forms');
+			return JText::_("MOD_SEOCLICK_FORM_SENDING_ERROR");
+		}
 
 		return JText::_("MOD_SEOCLICK_FORMS_SUCCESS");
 	}
@@ -136,8 +155,8 @@ class ModSeoclickFormsHelper
 				continue;
 			}
 
-			$formField = self::checkData($formField, $field_params['type'], $field_params['maxlength']);
-			if (!$formField && $field_params['type'] != 'line_text') return false;
+			$formField = self::checkData($formField, $field_params['type'], $field_params['maxlength'], $field_params['pattern']);
+			if (!$formField) return false;
 
 			$mailLabel = $field_params['mail_label'];
 
@@ -154,38 +173,40 @@ class ModSeoclickFormsHelper
 
 	/*
 	 * Функция проверки данных.
-	 * Функция получает поле формы ,его тип и максимум символов.
+	 * Функция получает поле формы ,его тип, максимум символов и регулярное выражение.
 	 * Возвращает отформатированую строку либо false
 	 */
-	private static function checkData($data, $type, $maxLength)
+	private static function checkData($data, $type, $maxLength, $pattern)
 	{
-		switch ($type)
-		{
-			case "site":
-				$pattern = self::$sitePattern;
-				break;
-			case "phone":
-				$pattern = self::$phonePattern;
-				break;
-			case "email":
-				$pattern = self::$emailPattern;
-				break;
-			case "line_text":
-				$data = self::clearData($data);
-				return $data;
-				break;
-			default:
-				$pattern = false;
+		if(empty($pattern)){
+			switch ($type)
+			{
+				case "site":
+					$pattern = self::$sitePattern;
+					break;
+				case "phone":
+					$pattern = self::$phonePattern;
+					break;
+				case "email":
+					$pattern = self::$emailPattern;
+					break;
+				case "line_text":
+					$data = self::clearData($data);
+					return $data;
+				default:
+					$pattern = false;
+			}
+		}else{
+			$pattern = '/'.$pattern.'/';
 		}
 
 		if (strlen($data) > $maxLength) return false;
 
-		if (!$pattern) return $data = self::clearData($data);
-
-		if (!preg_match($pattern, $data) || empty($data)) return false;
+		if ($pattern && !preg_match($pattern, $data)) return false;
 
 		return $data = self::clearData($data);
 	}
+
 	private static function clearData($data){
 
 		$data = htmlspecialchars($data);
