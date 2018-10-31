@@ -5,8 +5,8 @@ jQuery(document).ready(function ($) {
         phonePattern = "^[\\d \\+]{1,5}[\\( \\d \\) \\s]{1,10}[-?\\d \\s]+$",
         emailPattern = "^[\\w \\.]+[@]{1}[\\w]+[\\.]{1}[\\D]{2,4}$",
         forms = $(".form-validate"),
-        default_site_tooltip_text = "Адрес должен быть в формате site.ru",
-        default_email_tooltip_text = "Email должен быть в формате почта@mail.ru",
+        default_site_tooltip_text = "Адрес должен быть в формате site.domain",
+        default_email_tooltip_text = "Email должен быть в формате mailbox@mail.domain",
         default_phone_tooltip_text = "Телефон должен быть в формате +код страны(код оператора)номер телефона. Например +375(33)123-45-67";
 
     $.each(forms, function (index, form) {
