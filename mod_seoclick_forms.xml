@@ -50,13 +50,15 @@
 						type="text"
 						label="MOD_SEOCLICK_FORMS_RECAPTCHA_SITEKEY_LABEL"
 						description="MOD_SEOCLICK_FORMS_RECAPTCHA_SITEKEY_DESCRIPTION"
-						size="50" />
+						size="50"
+						showon="joomla_recapcha:0"/>
 				<field
 						name="joomla_recapcha_secretkey"
 						type="text"
 						label="MOD_SEOCLICK_FORMS_RECAPTCHA_SECRETKEY_LABEL"
 						description="MOD_SEOCLICK_FORMS_RECAPTCHA_SECRETKEY_DESCRIPTION"
-						size="50" />
+						size="50"
+						showon="joomla_recapcha:0"/>
 				<field
 						name="form_fields"
 						type="subform"

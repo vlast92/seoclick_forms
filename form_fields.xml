@@ -20,7 +20,8 @@
                type="textarea"
                rows="5"
                label="MOD_SEOCLICK_FORMS_SELECT_OPTIONS_LABEL"
-               description="MOD_SEOCLICK_FORMS_SELECT_OPTIONS_DESCRIPTION"/>
+               description="MOD_SEOCLICK_FORMS_SELECT_OPTIONS_DESCRIPTION"
+               showon="type:select"/>
         <field
                 name="label"
                 type="text"
@@ -49,13 +50,15 @@
                type="text"
                label="MOD_SEOCLICK_FORMS_PATTERN_LABEL"
                description="MOD_SEOCLICK_FORMS_PATTERN_DESCRIPTION"
-               size="100"/>
+               size="100"
+               showon="validation:1"/>
         <field name="tooltip"
                type="textarea"
                rows="5"
                label="MOD_SEOCLICK_FORMS_TOOLTIP_LABEL"
                description="MOD_SEOCLICK_FORMS_TOOLTIP_DESCRIPTION"
-               size="100"/>
+               size="100"
+               showon="validation:1"/>
         <field
                 name="placeholder"
                 type="text"
