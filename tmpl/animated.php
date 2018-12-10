@@ -17,7 +17,7 @@ $document->addScript($module_assets . '/js/seoclick-animated-form.min.js?v='
 
 $key = 0;
 
-$form_id = "seoclick-form_". rand(1, 9999999);
+$form_id = "seoclick-form_". $module->id . '_' . rand(1, 9999999);
 ?>
 <div id="<?=$form_id?>" class="form-wrap seoclick-forms <?= $moduleclass_sfx; ?>">
     <div class="message-container"></div>
@@ -35,66 +35,85 @@ $form_id = "seoclick-form_". rand(1, 9999999);
 	                    <?php if ($formField['required']): ?><span class="required">*</span><?php endif;?>
                     </span>
 					<?php endif; ?>
-					<?php if ($formField['type'] == "textarea"): ?>
-                        <textarea
-                                maxlength="<?= $formField['maxlength']; ?>"
-	                        <?php if ($formField['validation']): ?>
-                                class="validate"
-                                data-validate="<?= $formField['type']; ?>"
-		                        <?php if ($formField['pattern']): ?>
-                                    pattern="<?= $formField['pattern'] ?>"
-		                        <?php endif; ?>
-		                        <?php if ($formField['tooltip']): ?>
-                                    data-tooltip="<?=$formField['tooltip']?>"
-		                        <?php endif; ?>
-	                        <?php endif; ?>
-                                name="<?= $name; ?>"
-							<?php if ($formField['required']): ?>
-                                required=""
-							<?php endif; ?>
-							<?php if ($formField['placeholder']): ?>
-                                placeholder="<?= $formField['placeholder']; ?>"
-							<?php endif; ?>></textarea>
-					<?php elseif ($formField['type'] == "select"): ?>
-                        <select name="<?= $name; ?>">
-                            <option selected
-                                    disabled><?= jText::_("MOD_SEOCLICK_FORMS_SELECT_CHOOSE_OPTION") ?></option>
-							<?php $options = explode("\r\n", $formField['select_options']);
-							foreach ($options as $option):?>
-                                <option value="<?= $option ?>"><?= $option ?></option>
-							<?php endforeach; ?>
-                        </select>
-					<?php else: ?>
-                        <input
-                                maxlength="<?= $formField['maxlength']; ?>"
-	                        <?php if ($formField['validation']): ?>
-                                class="validate"
-                                data-validate="<?= $formField['type']; ?>"
-		                        <?php if ($formField['pattern']): ?>
-                                    pattern="<?= $formField['pattern'] ?>"
-		                        <?php endif; ?>
-		                        <?php if ($formField['tooltip']): ?>
-                                    data-tooltip="<?=$formField['tooltip']?>"
-		                        <?php endif; ?>
-	                        <?php endif; ?>
-                                name="<?= $name; ?>"
-							<?php if ($formField['required']): ?>
-                                required=""
-							<?php endif; ?>
-							<?php if ($formField['type'] == "email"): ?>
-                                type="email"
-							<?php elseif($formField['type'] == "date"):?>
-                                type="date"
-							<?php elseif($formField['type'] == "hidden"):?>
-                                type="hidden"
-							<?php else: ?>
-                                type="text"
-							<?php endif; ?>
-							<?php if ($formField['placeholder']): ?>
-                                placeholder="<?= $formField['placeholder']; ?>"
-							<?php endif; ?>
-                        />
-					<?php endif; ?>
+	                <?php switch ($formField['type']):
+		                case "textarea":
+			                ?>
+                            <textarea
+                                    maxlength="<?= $formField['maxlength']; ?>"
+								<?php if ($formField['validation']): ?>
+                                    class="validate"
+                                    data-validate="<?= $formField['type']; ?>"
+									<?php if ($formField['pattern']): ?>
+                                        pattern="<?= $formField['pattern'] ?>"
+									<?php endif; ?>
+									<?php if ($formField['tooltip']): ?>
+                                        data-tooltip="<?= $formField['tooltip'] ?>"
+									<?php endif; ?>
+								<?php endif; ?>
+                                    name="<?= $name; ?>"
+								<?php if ($formField['required']): ?>
+                                    required=""
+								<?php endif; ?>
+				                <?php if ($formField['placeholder']): ?>
+                                    placeholder="<?= $formField['placeholder']; ?>"
+				                <?php endif; ?>></textarea>
+			                <?php break; ?>
+		                <?php case "select": ?>
+                            <select name="<?= $name; ?>">
+                                <option selected
+                                        disabled><?= jText::_("MOD_SEOCLICK_FORMS_SELECT_CHOOSE_OPTION") ?></option>
+				                <?php $options = explode("\r\n", $formField['select_options']);
+				                foreach ($options as $option):?>
+                                    <option value="<?= $option ?>"><?= $option ?></option>
+				                <?php endforeach; ?>
+                            </select>
+			                <?php break; ?>
+		                <?php case "file": ?>
+                            <input class="file-input"
+				                <?php if ($formField['required']): ?>
+                                    required=""
+				                <?php endif; ?>
+				                <?php if ($formField['myltiple']):?>
+                                    multiple="multiple"
+				                <?php endif; ?>
+				                <?php if ($formField['filesize']):?>
+                                    data-size="<?=$formField['filesize']?>"
+				                <?php endif; ?>
+                                   accept="<?=$formField["filetypes"]?>"
+                                   name="atachment[]"
+                                   type="file" />
+			                <?php break; ?>
+		                <?php default: ?>
+                            <input
+                                    maxlength="<?= $formField['maxlength']; ?>"
+				                <?php if ($formField['validation']): ?>
+                                    class="validate"
+                                    data-validate="<?= $formField['type']; ?>"
+					                <?php if ($formField['pattern']): ?>
+                                        pattern="<?= $formField['pattern'] ?>"
+					                <?php endif; ?>
+					                <?php if ($formField['tooltip']): ?>
+                                        data-tooltip="<?= $formField['tooltip'] ?>"
+					                <?php endif; ?>
+				                <?php endif; ?>
+                                    name="<?= $name; ?>"
+				                <?php if ($formField['required']): ?>
+                                    required=""
+				                <?php endif; ?>
+				                <?php if ($formField['type'] == "email"): ?>
+                                    type="email"
+				                <?php elseif ($formField['type'] == "date"): ?>
+                                    type="date"
+				                <?php elseif ($formField['type'] == "hidden"): ?>
+                                    type="hidden"
+				                <?php else: ?>
+                                    type="text"
+				                <?php endif; ?>
+				                <?php if ($formField['placeholder']): ?>
+                                    placeholder="<?= $formField['placeholder']; ?>"
+				                <?php endif; ?>
+                            />
+		                <?php endswitch; ?>
 					<?php if ($formField['label']): ?>
                 </label>
 			<?php endif; ?>

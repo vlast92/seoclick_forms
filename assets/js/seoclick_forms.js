@@ -235,17 +235,41 @@ jQuery(document).ready(function ($) {
 
         event.preventDefault();
 
-        var form = $(this),
+        var formData = new FormData(),
+            form = $(this),
             capchaResponse = void 0,
             request = void 0,
             data = void 0,
             formContainer = form.closest(".seoclick-forms"),
-            messageBox = formContainer.find(".message-container");
-
-        data = form.serializeArray();
-        data = objectifyFormData(data);
+            messageBox = formContainer.find(".message-container"),
+            files_data = form.find('.file-input')[0];
 
         messageBox.addClass("active");
+
+        if (files_data !== undefined) {
+            files_data = files_data.files;
+
+            var check = checkFiles(files_data, form);
+
+            if (!check.valid) {
+                messageBox.html(check.message);
+                return 0;
+            }
+            for (var i = 0; i < files_data.length; i++) {
+                formData.append("file_" + i, files_data[i]);
+            }
+        }
+
+        data = form.serializeArray();
+        $.each(data, function (key, input) {
+            formData.append(input.name, input.value);
+        });
+
+        //Добавляем параметры запроса
+        formData.append('option', 'com_ajax');
+        formData.append('module', 'seoclick_forms');
+        formData.append('format', 'json');
+
         if ($(formContainer).hasClass("seoclick-forms-popup-wrap")) {
             $(formContainer).find(".container").animate({
                 scrollTop: 0
@@ -263,22 +287,20 @@ jQuery(document).ready(function ($) {
         }
 
         messageBox.html("Отправка...");
-        // Формируем параметры запроса
-        request = {
-            'option': 'com_ajax', // Используем AJAX интерфейс
-            'module': 'seoclick_forms', // Название модуля без mod_
-            'format': 'json', // Формат возвращаемых данных
-            'g-recaptcha-response': capchaResponse, //ответ капчи
-            'data': data // данные формы
-        };
 
         $.ajax({
             type: 'POST',
-            data: request,
+            data: formData,
+            processData: false,
+            contentType: false,
 
             success: function success(respond) {
 
-                messageBox.html(respond.data);
+                if (respond.message !== null) {
+                    messageBox.html(respond.message);
+                } else {
+                    messageBox.html(respond.data);
+                }
             },
             error: function error(jqXHR, textStatus) {
                 messageBox.html('Ошибка AJAX запроса: ' + textStatus);
@@ -288,21 +310,25 @@ jQuery(document).ready(function ($) {
         grecaptcha.reset();
         return true;
     }
+    function checkFiles(files, form) {
 
-    /*
-    * Функция преобразования сериализованного массива
-    * функция принимает сериализованый двухмерный массив данных
-    * производит его преобразования из двухмерного массива
-    * в одномерный и возвращает полученный массив
-    */
-    function objectifyFormData(formArray) {
-        //преобразование массива
+        var responce = { message: "", valid: true };
 
-        var returnArray = {};
-        for (var i = 0; i < formArray.length; i++) {
-            returnArray[formArray[i]['name']] = formArray[i]['value'];
-        }
-        return returnArray;
+        $.each(files, function (index, file) {
+
+            var file_size = file.size / 1000,
+                max_size = form.find(".file-input").data("size");
+
+            if (file_size > max_size) {
+
+                responce.message = "Размер файла " + file.name + " превышает допустимый размер в " + max_size + " кб. Его размер " + Math.round(file_size) + " кб.";
+                responce.valid = false;
+
+                return responce;
+            }
+        });
+
+        return responce;
     }
 });
 //# sourceMappingURL=seoclick_forms.js.map

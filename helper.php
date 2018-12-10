@@ -30,17 +30,21 @@ class ModSeoclickFormsHelper
 			array('mod_seoclick_forms')
 		);
 
-		self::$formData = $_POST["data"];
+		self::$formData = $_POST;
 
 		self::getModuleParams();
 
-		if (!self::checkCaptchaResponse()){
+		if (!self::checkCaptchaResponse())
+		{
 			JLog::add(JText::_('MOD_SEOCLICK_FORM_CAPTCHA_ERROR'), JLog::ERROR, 'mod_seoclick_forms');
+
 			return JText::_("MOD_SEOCLICK_FORM_CAPTCHA_ERROR");
 		}
 
-		if (!self::getEmail()){
+		if (!self::getEmail())
+		{
 			JLog::add(JText::_('MOD_SEOCLICK_FORMS_NO_EMAIL'), JLog::ERROR, 'mod_seoclick_forms');
+
 			return JText::_("MOD_SEOCLICK_FORMS_NO_EMAIL");
 		}
 
@@ -55,7 +59,8 @@ class ModSeoclickFormsHelper
 	 */
 	private static function checkCaptchaResponse()
 	{
-		if(self::$moduleParams->get("joomla_recapcha")){
+		if (self::$moduleParams->get("joomla_recapcha"))
+		{
 			JPluginHelper::importPlugin('captcha');
 			$dispatcher = JEventDispatcher::getInstance();
 			$answer     = $dispatcher->trigger('onCheckAnswer');
@@ -63,8 +68,10 @@ class ModSeoclickFormsHelper
 			if (!$answer[0]) return false;
 
 			return true;
-		}else{
-			$response  = $_POST['g-recaptcha-response'];
+		}
+		else
+		{
+			$response   = self::$formData['g-recaptcha-response'];
 			$google_url = "https://www.google.com/recaptcha/api/siteverify";
 			$secret     = self::$moduleParams->get("joomla_recapcha_secretkey");
 			$ip         = $_SERVER['REMOTE_ADDR'];
@@ -115,8 +122,10 @@ class ModSeoclickFormsHelper
 	private static function sendEmail()
 	{
 		$messageContent = self::getMessageContent();
-		if (!$messageContent) {
+		if (!$messageContent)
+		{
 			JLog::add(JText::_('MOD_SEOCLICK_FORM_VALIDATION_ERROR'), JLog::ERROR, 'mod_seoclick_forms');
+
 			return JText::_("MOD_SEOCLICK_FORM_VALIDATION_ERROR");
 		}
 
@@ -127,42 +136,68 @@ class ModSeoclickFormsHelper
 		$messageStart = '<html><head><title>' . $subject . '</title></head><body>';
 		$messageEnd   = '</body></html>';
 		$message      = $messageStart . $messageContent . $messageEnd;
-		$headers      = "Content-type: text/html; charset=utf-8 \r\n";
-		$headers      .= "From: " . $fromName . " <" . $from . ">\r\n";
 
-		if (!mail(self::$email, $subject, $message, $headers)){
+		$boundary = "--" . md5(uniqid(time()));//разделитель
+		$headers  = "Content-Type: multipart/mixed; boundary=\"" . $boundary . "\"\r\n";
+		$headers  .= "MIME-Version: 1.0;\r\n";
+		$headers  .= "From: " . $fromName . " <" . $from . ">\r\n";
+
+		/*Прикрепление текста к письму*/
+		$multipart = "--" . $boundary . "\r\n";
+		$multipart .= "Content-Type: text/html; charset=utf-8\r\n";
+		$multipart .= "Content-Transfer-Encoding: base64\r\n";
+		$multipart .= "\r\n";
+		$multipart .= chunk_split(base64_encode($message));
+
+		if (!empty($_FILES))
+		{
+			$filesMarkup = self::addFiles($_FILES, $boundary);
+
+			if ($filesMarkup['message']) return $filesMarkup['message'];
+			$multipart .= $filesMarkup['fileMarkup'];
+		}
+
+		if (!mail(self::$email, $subject, $multipart, $headers))
+		{
 			JLog::add(JText::_('MOD_SEOCLICK_FORM_SENDING_ERROR'), JLog::ERROR, 'mod_seoclick_forms');
+
 			return JText::_("MOD_SEOCLICK_FORM_SENDING_ERROR");
 		}
 
 		return JText::_("MOD_SEOCLICK_FORMS_SUCCESS");
 	}
+
 	/*
 	 * Функция генерирует содержимое письма
 	 * и возвращает его либо false
 	 */
 	private static function getMessageContent()
 	{
-		$messageContent  = "";
-		$formData        = self::$formData;
-		$formFields      = json_decode(json_encode( self::$moduleParams->get("form_fields")), true);
+		$messageContent = "";
+		$formData       = self::$formData;
+		$formFields     = json_decode(json_encode(self::$moduleParams->get("form_fields")), true);
 
 		foreach ($formData as $name => $formField)
 		{
 			$field_params = $formFields[$name];
 
-			if ($name == "g-recaptcha-response" || $name == "module-name" || empty($formField) && $field_params['type'] != 'line_text'){
+			if ($name == "g-recaptcha-response" || $name == "module-name" || $name == "option" || $name == "module" || $name == "format" || empty($formField) && $field_params['type'] != 'line_text')
+			{
 				continue;
 			}
 
+			if(!$field_params) return false;
 			$formField = self::checkData($formField, $field_params['type'], $field_params['maxlength'], $field_params['pattern']);
 			if (!$formField) return false;
 
 			$mailLabel = $field_params['mail_label'];
 
-			if($field_params['type'] == 'line_text'){
+			if ($field_params['type'] == 'line_text')
+			{
 				$messageContent .= "\n<p>" . $mailLabel . "</p>";
-			}else{
+			}
+			else
+			{
 				$messageContent .= "\n<p>" . $mailLabel . ":&nbsp;" . $formField . "</p>";
 			}
 
@@ -178,7 +213,8 @@ class ModSeoclickFormsHelper
 	 */
 	private static function checkData($data, $type, $maxLength, $pattern)
 	{
-		if(empty($pattern)){
+		if (empty($pattern))
+		{
 			switch ($type)
 			{
 				case "site":
@@ -196,8 +232,10 @@ class ModSeoclickFormsHelper
 				default:
 					$pattern = false;
 			}
-		}else{
-			$pattern = '/'.$pattern.'/';
+		}
+		else
+		{
+			$pattern = '/' . $pattern . '/';
 		}
 
 		if (strlen($data) > $maxLength) return false;
@@ -207,12 +245,77 @@ class ModSeoclickFormsHelper
 		return $data = self::clearData($data);
 	}
 
-	private static function clearData($data){
+	private static function clearData($data)
+	{
 
 		$data = htmlspecialchars($data);
 		$data = nl2br($data);
 		$data = trim($data);
 
 		return $data;
+	}
+
+	private static function addFiles($files, $boundary)
+	{
+
+		$response      = array('fileMarkup' => '', 'message' => false);
+		$filesMarkup   = '';
+		$fieldSettings = false;
+		$maxFileSize = '';
+		$allowedFilesMimes = '';
+
+		$formFields = json_decode(json_encode(self::$moduleParams->get("form_fields")), true);
+		foreach ($formFields as $formField)
+		{
+			if ($formField['type'] === 'file')
+			{
+				$fieldSettings = true;
+				$maxFileSize   = $formField['filesize'];
+				$allowedFilesMimes = $formField['filemimes'];
+			}
+		}
+
+		if (!$fieldSettings)
+		{
+			$response['message'] = jText::_("MOD_SEOCLICK_FORMS_ERROR_FILE_NOSETTINGS");
+
+			return $response;
+		}
+
+		foreach ($files as $file)
+		{
+			if ($file["size"] / 1000 > $maxFileSize)
+			{
+				$response['message'] = jText::_("MOD_SEOCLICK_FORMS_ERROR_FILESIZE");
+				return $response;
+			}
+
+			$filePath = $file['tmp_name'];
+			$filename = $file['name'];
+
+			$fileMime = mime_content_type($filePath);
+			$allowedFilesMimes = explode(',', $allowedFilesMimes);
+			if(array_search($fileMime, $allowedFilesMimes) === false){
+				$response['message'] = jText::_("MOD_SEOCLICK_FORMS_MIME_ERROR");
+				return $response;
+			}
+
+			if (!$file = file_get_contents($filePath))
+			{
+				$response['message'] = jText::_("MOD_SEOCLICK_FORMS_ERROR_NOFILE");
+				return $response;
+			}
+
+			$filesMarkup .= "\r\n--" . $boundary . "\r\n";
+			$filesMarkup .= "Content-Type: application/octet-stream; name=\"" . $filename . "\"\r\n";
+			$filesMarkup .= "Content-Transfer-Encoding: base64\r\n";
+			$filesMarkup .= "Content-Disposition: attachment; filename=\"" . $filename . "\"\r\n";
+			$filesMarkup .= "\r\n";
+			$filesMarkup .= chunk_split(base64_encode($file));
+		}
+		$filesMarkup            .= "\r\n--" . $boundary . "--\r\n";
+		$response['fileMarkup'] = $filesMarkup;
+
+		return $response;
 	}
 }
