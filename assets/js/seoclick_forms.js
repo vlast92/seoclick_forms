@@ -71,7 +71,7 @@ jQuery(document).ready(function ($) {
                 break;
             case 'show':
                 input.next().show();
-                input.next().css("top", input.outerHeight(true) + 8);
+                input.next().css("top", input.outerHeight(true) + 8 + input.prev(".fieldName").outerHeight(true));
                 input.next().animate({
                     opacity: 1
                 }, 300, function () {
