@@ -3,6 +3,7 @@ jQuery(document).ready(function ($) {
     let formContainer = $(".seoclick-forms-popup-wrap"),//контейнер формы
         show_button = $(".seoclickFormsShowpopUpForm");//кнопка показа формы
 
+    $("body").append(formContainer);
     formContainer.find("form").wrap('<div class="modal-wrap"></div>').append('<span class="close-button">X</span>');
     $(".modal-wrap").append('<div class="close-background"></div>');
     //Обработчики скрытия форм
