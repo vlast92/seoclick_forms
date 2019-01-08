@@ -74,8 +74,8 @@ jQuery(document).ready(function ($) {
             case 'show':
                 input.next().show();
                 input.next().css({
-                    top: input.outerHeight(true) + 8 + input.prev(".fieldName").outerHeight(true),
-                    left: input[0].getBoundingClientRect().left - container[0].getBoundingClientRect().left - parseInt(container.css("padding-left"))
+                    top: input[0].getBoundingClientRect().bottom - container[0].getBoundingClientRect().top + 8,
+                    left: input[0].getBoundingClientRect().left - container[0].getBoundingClientRect().left
                 });
                 input.next().animate({
                     opacity: 1

@@ -2,6 +2,8 @@
   font-size: 100%;
   position: relative;
   padding: 0 3rem; }
+  .seoclick-forms .form-validate {
+    position: relative; }
   .seoclick-forms .form-title {
     color: #000;
     font-size: 1.333rem;
@@ -32,7 +34,6 @@
       transform: scale(1);
       margin-bottom: 1.429em; }
   .seoclick-forms .field-wrap {
-    position: relative;
     margin-bottom: 1rem; }
     .seoclick-forms .field-wrap label {
       margin-bottom: 0; }

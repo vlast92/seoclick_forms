@@ -4,7 +4,7 @@ jQuery(document).ready(function ($) {
         show_button = $(".seoclickFormsShowpopUpForm");//кнопка показа формы
 
     $("body").append(formContainer);
-    formContainer.find("form").wrap('<div class="modal-wrap"></div>').append('<span class="close-button"><img src="/assets/close.svg" alt="close"/></span>');
+    formContainer.find("form").wrap('<div class="modal-wrap"></div>').append('<span class="close-button"><img src="/modules/mod_seoclick_forms/assets/close.svg" alt="close"/></span>');
     $(".modal-wrap").append('<div class="close-background"></div>');
     //Обработчики скрытия форм
     $('.close-button').on("click", closeModal);
