@@ -62,6 +62,8 @@ jQuery(document).ready(function ($) {
     * */
     function tooltip(input, command) {
 
+        let container = input.closest('.form-validate');
+
         switch (command) {
             case 'create':
                 input.after("<div class='invalid-tooltip'><div>" + input.data("tooltip") + "</div></div>");
@@ -69,7 +71,10 @@ jQuery(document).ready(function ($) {
                 break;
             case 'show':
                 input.next().show();
-                input.next().css("top", input.outerHeight(true) + 8 + input.prev(".fieldName").outerHeight(true));
+                input.next().css({
+                    top: input.outerHeight(true) + 8 + input.prev(".fieldName").outerHeight(true),
+                    left: input[0].getBoundingClientRect().left - container[0].getBoundingClientRect().left - parseInt(container.css("padding-left"))
+                });
                 input.next().animate({
                     opacity: 1
                 }, 300, () => {
