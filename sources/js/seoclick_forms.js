@@ -2,7 +2,7 @@ jQuery(document).ready(function ($) {
 
     let inputs,
         sitePattern = "^[\\w \\.]+[\\.]{1}[\\D]{2,4}$",
-        phonePattern = "^[\\d \\+]{1,5}[\\( \\d \\) \\s]{1,10}[-?\\d \\s]+$",
+        phonePattern = "^[\\d \\+]{1,5}[\\( \\d \\) \\s]{1,10}[-?\\d \\s]{5}$",
         emailPattern = "^[\\w \\.]+[@]{1}[\\w]+[\\.]{1}[\\D]{2,4}$",
         forms = $(".form-validate"),
         default_site_tooltip_text = "Адрес должен быть в формате site.domain",
