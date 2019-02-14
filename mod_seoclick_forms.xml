@@ -29,7 +29,7 @@
 				<field
 						name="load_styles"
 						type="radio"
-						default="0"
+						default="1"
 						label="MOD_SEOCLICK_FORMS_STYLES_LABEL"
 						description="MOD_SEOCLICK_FORMS_STYLES_DESCRIPTION"
 						class="btn-group btn-group-yesno">
@@ -82,7 +82,15 @@
 						type="text"
 						label="MOD_SEOCLICK_FORMS_SHOW_FORM_LABEL"
 						description="MOD_SEOCLICK_FORMS_SHOW_FORM_DESCRIPTION"
+                        showon="layout:_:popup"
 						size="50" />
+                <field
+                        name="show_button_css"
+                        type="text"
+                        label="MOD_SEOCLICK_FORMS_SHOW_FORM_CSS"
+                        description="MOD_SEOCLICK_FORMS_SHOW_FORM_CSS_DESCRIPTION"
+                        showon="layout:_:popup"
+                        size="50" />
 				<field
 						name="email"
 						type="email"
@@ -125,6 +133,11 @@
 						type="text"
 						label="MOD_SEOCLICK_FORMS_SUBMIT_TEXT_LABEL"
 						description="MOD_SEOCLICK_FORMS_SUBMIT_TEXT_DESCRIPTION" />
+                <field
+						name="submit_css"
+						type="text"
+						label="MOD_SEOCLICK_FORMS_SUBMIT_CSS_LABEL"
+						description="MOD_SEOCLICK_FORMS_SUBMIT_CSS_DESCRIPTION" />
 			</fieldset>
 			<fieldset
 					name="advanced">

@@ -71,4 +71,22 @@
     background: #e37c22;
     border-radius: 50%;
   }
+  .field-wrap{
+    margin: 0 auto 1rem auto;
+    max-width: 19rem;
+
+    &:not(.submit-button-wrap) input, textarea{
+      max-width: initial;
+    }
+  }
+  .submit-button-wrap{
+    text-align: center;
+  }
+  .g-recaptcha {
+    display: block;
+
+    > div {
+      margin: 0 auto 1rem auto;
+    }
+  }
 }

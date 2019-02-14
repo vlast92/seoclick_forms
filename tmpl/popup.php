@@ -18,7 +18,7 @@ $document->addScript($module_assets . '/js/popup.min.js?v='
 $key = 0;
 $form_id = "seoclick-form_". $module->id . '_' . rand(1, 9999999);
 ?>
-    <div class="seoclickFormsShowpopUpForm" data-form="<?= $form_id ?>"><?= $showButtonText ?></div>
+    <div class="seoclickFormsShowpopUpForm <?=$showButtonCss?>" data-form="<?= $form_id ?>"><?= $showButtonText ?></div>
     <div id="<?= $form_id ?>" class="seoclick-forms seoclick-forms-popup-wrap <?= $moduleclass_sfx; ?>">
         <form class="form-validate">
             <div class="container">
@@ -142,7 +142,7 @@ $form_id = "seoclick-form_". $module->id . '_' . rand(1, 9999999);
 					echo "<div class=\"g-recaptcha\" data-sitekey=\"$sitekey\"></div>";
 				} ?>
                 <input type="hidden" name="module-name" value="<?= $module->title ?>"/>
-                <div class="field-wrap submit-button-wrap"><input type="submit" value="<?= $submitText; ?>"/></div>
+                <div class="field-wrap submit-button-wrap"><input type="submit" class="<?=$submitCss?>" value="<?= $submitText; ?>"/></div>
             </div>
         </form>
     </div>

@@ -87,5 +87,16 @@
     right: -0.625rem;
     background: #e37c22;
     border-radius: 50%; }
+  .seoclick-forms-popup-wrap .field-wrap {
+    margin: 0 auto 1rem auto;
+    max-width: 19rem; }
+    .seoclick-forms-popup-wrap .field-wrap:not(.submit-button-wrap) input, .seoclick-forms-popup-wrap .field-wrap textarea {
+      max-width: initial; }
+  .seoclick-forms-popup-wrap .submit-button-wrap {
+    text-align: center; }
+  .seoclick-forms-popup-wrap .g-recaptcha {
+    display: block; }
+    .seoclick-forms-popup-wrap .g-recaptcha > div {
+      margin: 0 auto 1rem auto; }
 
 /*# sourceMappingURL=popup_form_styles.css.map */

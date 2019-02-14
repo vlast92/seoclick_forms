@@ -146,7 +146,7 @@ $form_id = "seoclick-form_". $module->id . '_' . rand(1, 9999999);
 			echo "<div class=\"g-recaptcha\" data-sitekey=\"$sitekey\"></div>";
 		} ?>
         <input type="hidden" name="module-name" value="<?= $module->title ?>"/>
-        <div class="field-wrap submit-button-wrap"><input type="submit" value="<?= $submitText; ?>"/></div>
+        <div class="field-wrap submit-button-wrap"><input type="submit" class="<?=$submitCss?>" value="<?= $submitText; ?>"/></div>
     </form>
 </div>
 <?php
