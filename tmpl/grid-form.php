@@ -31,6 +31,8 @@ $form_id = "seoclick-form_". $module->id . '_' . rand(1, 9999999);
                         </span>
 						<?php endif; ?>
 	                    <?php switch ($formField['type']):
+                            case "line_text":?>
+                                 <?php break;
 		                    case "textarea":
 			                    ?>
                                 <textarea
@@ -38,12 +40,14 @@ $form_id = "seoclick-form_". $module->id . '_' . rand(1, 9999999);
 								<?php if ($formField['validation']): ?>
                                     class="validate"
                                     data-validate="<?= $formField['type']; ?>"
-									<?php if ($formField['pattern']): ?>
-                                        pattern="<?= $formField['pattern'] ?>"
-									<?php endif; ?>
-									<?php if ($formField['tooltip']): ?>
-                                        data-tooltip="<?= $formField['tooltip'] ?>"
-									<?php endif; ?>
+                                    <?php if (!$formField['default_validation']):?>
+										<?php if ($formField['pattern']): ?>
+                                            pattern="<?= $formField['pattern'] ?>"
+										<?php endif; ?>
+										<?php if ($formField['tooltip']): ?>
+                                            data-tooltip="<?= $formField['tooltip'] ?>"
+										<?php endif; ?>
+                                    <?php endif; ?>
 								<?php endif; ?>
                                     name="<?= $name; ?>"
 								<?php if ($formField['required']): ?>
@@ -84,11 +88,13 @@ $form_id = "seoclick-form_". $module->id . '_' . rand(1, 9999999);
 				                    <?php if ($formField['validation']): ?>
                                         class="validate"
                                         data-validate="<?= $formField['type']; ?>"
-					                    <?php if ($formField['pattern']): ?>
-                                            pattern="<?= $formField['pattern'] ?>"
-					                    <?php endif; ?>
-					                    <?php if ($formField['tooltip']): ?>
-                                            data-tooltip="<?= $formField['tooltip'] ?>"
+					                    <?php if (!$formField['default_validation']):?>
+						                    <?php if ($formField['pattern']): ?>
+                                                pattern="<?= $formField['pattern'] ?>"
+						                    <?php endif; ?>
+						                    <?php if ($formField['tooltip']): ?>
+                                                data-tooltip="<?= $formField['tooltip'] ?>"
+						                    <?php endif; ?>
 					                    <?php endif; ?>
 				                    <?php endif; ?>
                                         name="<?= $name; ?>"
