@@ -27,7 +27,7 @@ $form_id = "seoclick-form_". $module->id . '_' . rand(1, 9999999);
 		<?php endif; ?>
 		<?php foreach ($formFields as $formField): ?>
 			<?php $name = "form_fields".$key++;?>
-            <div class="field-wrap">
+            <div class="field-wrap <?= $formField['css'] ?>">
 				<?php if ($formField['label']): ?>
                 <label>
                     <span class="fieldName">
