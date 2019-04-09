@@ -92,6 +92,7 @@
   .seoclick-forms .g-recaptcha {
     display: inline-block; }
     .seoclick-forms .g-recaptcha > div {
-      margin: 0 0 1rem 0; }
+      margin: 0 0 1rem 0;
+      z-index: 1; }
 
 /*# sourceMappingURL=seoclick_forms_styles.css.map */
