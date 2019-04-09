@@ -1,3 +1,15 @@
+//TODO сделать рендером всех рекапч вместо стандартного из Joomla
+//Рендер невидимых рекапч
+let renderInvisibleRecaptcha = function () {
+    jQuery(function ($) {
+        $.each($('.g-recaptcha'), function (index, captcha) {
+            var widgetId = grecaptcha.render(captcha);
+
+            $(captcha).data('recaptcha-widget-id', widgetId);
+        });
+    });
+};
+
 jQuery(document).ready(function ($) {
 
     let inputs,
@@ -17,7 +29,7 @@ jQuery(document).ready(function ($) {
         //вызываем функцию установки обработчиков на поля формы
         setEvents(inputs);
         //вешам обработчик отправки формы
-        $(form).on("submit", sendData);
+        $(form).on("submit", validateForm);
     });
 
     /*
@@ -231,92 +243,17 @@ jQuery(document).ready(function ($) {
         }
     }
 
-    //функция отправки данных на сервер
-    function sendData(event) {
-
-        event.preventDefault();
-
-        let formData = new FormData(), form = $(this), capchaResponse, request, data,
-            formContainer = form.closest(".seoclick-forms"),
-            messageBox = formContainer.find(".message-container"),
-            files_data = form.find('.file-input')[0];
-
-        messageBox.addClass("active");
-
-        if(files_data !== undefined){
-            files_data = files_data.files;
-
-            let check = checkFiles(files_data, form);
-
-            if(!check.valid){
-                messageBox.html(check.message);
-                return 0;
-            }
-            for(let i = 0; i < files_data.length; i++){
-                formData.append("file_"+i, files_data[i]);
-            }
-        }
-
-        data = form.serializeArray();
-        $.each(data,function(key,input){
-            formData.append(input.name,input.value);
-        });
-
-        //Добавляем параметры запроса
-        formData.append('option', 'com_ajax');
-        formData.append('module', 'seoclick_forms');
-        formData.append('format', 'json');
-
-        if ($(formContainer).hasClass("seoclick-forms-popup-wrap")) {
-            $(formContainer).find(".container").animate({
-                scrollTop: 0
-            }, 300);
-        } else {
-            $('html, body').animate({
-                scrollTop: formContainer.offset().top - 200
-            }, 300);
-        }
-
-        capchaResponse = form.find(".g-recaptcha-response").val();
-        if (capchaResponse === "") {
-           messageBox.html("Не пройдена проверка 'Я не робот'");
-           return false;
-        }
-
-        messageBox.html("Отправка...");
-
-        $.ajax({
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-
-            success: function (respond) {
-
-                if(respond.message !== null){
-                    messageBox.html(respond.message);
-                }else{
-                    messageBox.html(respond.data);
-                }
-            },
-            error: function (jqXHR, textStatus) {
-                messageBox.html('Ошибка AJAX запроса: ' + textStatus);
-            }
-        });
-
-        grecaptcha.reset();
-        return true;
-    }
-    function checkFiles(files, form){
+    //Валидация вложений формы
+    function checkFiles(files, form) {
 
 
-        let  responce = {message:"",valid: true};
+        let responce = {message: "", valid: true};
 
-        $.each(files, function(index, file){
+        $.each(files, function (index, file) {
 
             let file_size = file.size / 1000, max_size = form.find(".file-input").data("size");
 
-            if(file_size > max_size){
+            if (file_size > max_size) {
 
                 responce.message = "Размер файла " + file.name + " превышает допустимый размер в " + max_size + " кб. Его размер " +
 
@@ -328,5 +265,98 @@ jQuery(document).ready(function ($) {
         });
 
         return responce;
+    }
+
+    //Валидация формы
+    function validateForm(event) {
+
+        event.preventDefault();
+
+        let data,
+            formData = new FormData(),
+            form = $(this),
+            formParams = window["seoclickForm_" + form.data("moduleid")],
+            formContainer = form.closest(".seoclick-forms"),
+            messageBox = formContainer.find(".message-container"),
+            files_data = form.find('.file-input')[0];
+
+        formParams.captchaWidgetID = form.find(".g-recaptcha").data("recaptcha-widget-id");
+        if (Number(formParams.recaptchaEnabled) && grecaptcha.getResponse(formParams.captchaWidgetID) === "") {
+            if (formParams.recaptchaType === 'invisible') {
+                grecaptcha.execute(formParams.captchaWidgetID);
+
+                return false;
+            }
+            messageBox.addClass("active");
+            messageBox.html("Не пройдена проверка 'Я не робот'");
+            return false;
+        }
+
+        messageBox.addClass("active");
+
+        if (files_data !== undefined) {
+            files_data = files_data.files;
+
+            let check = checkFiles(files_data, form);
+
+            if (!check.valid) {
+                messageBox.html(check.message);
+                return 0;
+            }
+            for (let i = 0; i < files_data.length; i++) {
+                formData.append("file_" + i, files_data[i]);
+            }
+        }
+
+        data = form.serializeArray();
+        $.each(data, function (key, input) {
+            formData.append(input.name, input.value);
+        });
+
+        //Добавляем параметры запроса
+        formData.append('option', 'com_ajax');
+        formData.append('module', 'seoclick_forms');
+        formData.append('format', 'json');
+
+        //Прокрутка окна браузера до окна сообщений формы
+        if ($(formContainer).hasClass("seoclick-forms-popup-wrap")) {
+            $(formContainer).find(".container").animate({
+                scrollTop: 0
+            }, 300);
+        } else {
+            $('html, body').animate({
+                scrollTop: formContainer.offset().top - 200
+            }, 300);
+        }
+
+        sendData(formData, formParams, messageBox);
+    }
+
+    //функция отправки данных на сервер
+    function sendData(formData, formParams, messageBox) {
+
+        messageBox.html("Отправка...");
+
+        $.ajax({
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+
+            success: function (respond) {
+
+                if (respond.message !== null) {
+                    messageBox.html(respond.message);
+                } else {
+                    messageBox.html(respond.data);
+                }
+            },
+            error: function (jqXHR, textStatus) {
+                messageBox.html('Ошибка AJAX запроса: ' + textStatus);
+            },
+            complete: function () {
+                if (Number(formParams.recaptchaEnabled)) grecaptcha.reset(formParams.captchaWidgetID);
+            }
+        });
     }
 });

@@ -26,23 +26,33 @@
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<field
-						name="load_styles"
-						type="radio"
-						default="1"
-						label="MOD_SEOCLICK_FORMS_STYLES_LABEL"
-						description="MOD_SEOCLICK_FORMS_STYLES_DESCRIPTION"
-						class="btn-group btn-group-yesno">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
-				</field>
+                <field name="note1" type="note" label="MOD_SEOCLICK_FORMS_RECAPTCHA_OPTIONS_LABEL" />
+                <field
+                        name="use_recaptcha"
+                        type="radio"
+                        default="1"
+                        label="MOD_SEOCLICK_FORMS_RECAPTCHA_ENABLED_LABEL"
+                        class="btn-group btn-group-yesno">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="recaptcha_type"
+                       label="MOD_SEOCLICK_FORMS_RECAPTCHA_TYPE"
+                       type="list"
+                       multiple="false"
+                       default="flags"
+                       showon = "use_recaptcha:1">
+                    <option value="flags">MOD_SEOCLICK_FORMS_RECAPTCHA_TYPE_FLAGS</option>
+                    <option value="invisible">MOD_SEOCLICK_FORMS_RECAPTCHA_TYPE_INVISIBLE</option>
+                </field>
 				<field
 						name="joomla_recapcha"
 						type="radio"
 						default="1"
 						label="MOD_SEOCLICK_FORMS_RECAPTCHA_LABEL"
 						description="MOD_SEOCLICK_FORMS_RECAPTCHA_DESCRIPTION"
-						class="btn-group btn-group-yesno">
+						class="btn-group btn-group-yesno"
+                        showon = "use_recaptcha:1">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>
@@ -60,18 +70,17 @@
 						description="MOD_SEOCLICK_FORMS_RECAPTCHA_SECRETKEY_DESCRIPTION"
 						size="50"
 						showon="joomla_recapcha:0"/>
-				<field
-						name="form_fields"
-						type="subform"
-						formsource="modules/mod_seoclick_forms/form_fields.xml"
-						min="1"
-						max="999999"
-						multiple="true"
-						layout="joomla.form.field.subform.repeatable"
-						groupByFieldset="false"
-						label="MOD_SEOCLICK_FORMS_FORM_FIELDS_LABEL"
-						description="MOD_SEOCLICK_FORMS_FORM_FIELDS_DESCRIPTION"
-				/>
+                <field name="note2" type="note" label="MOD_SEOCLICK_FORMS_OPTIONS_LABEL" />
+                <field
+                        name="load_styles"
+                        type="radio"
+                        default="1"
+                        label="MOD_SEOCLICK_FORMS_STYLES_LABEL"
+                        description="MOD_SEOCLICK_FORMS_STYLES_DESCRIPTION"
+                        class="btn-group btn-group-yesno">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
 				<field
 						name="layout"
 						type="modulelayout"
@@ -139,6 +148,20 @@
 						label="MOD_SEOCLICK_FORMS_SUBMIT_CSS_LABEL"
 						description="MOD_SEOCLICK_FORMS_SUBMIT_CSS_DESCRIPTION" />
 			</fieldset>
+            <fieldset name="form_fields">
+                <field
+                        name="form_fields"
+                        type="subform"
+                        formsource="modules/mod_seoclick_forms/form_fields.xml"
+                        min="1"
+                        max="999999"
+                        multiple="true"
+                        layout="joomla.form.field.subform.repeatable"
+                        groupByFieldset="false"
+                        label="MOD_SEOCLICK_FORMS_FORM_FIELDS_LABEL"
+                        description="MOD_SEOCLICK_FORMS_FORM_FIELDS_DESCRIPTION"
+                />
+            </fieldset>
 			<fieldset
 					name="advanced">
 				<field

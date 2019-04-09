@@ -16,11 +16,11 @@ $document->addScript($module_assets . '/js/popup.min.js?v='
 	. filemtime($_SERVER['DOCUMENT_ROOT'] . $module_assets . '/js/popup.min.js'));
 
 $key = 0;
-$form_id = "seoclick-form_". $module->id . '_' . rand(1, 9999999);
+$form_id = "seoclick-form_". $module->id;
 ?>
     <div class="seoclickFormsShowpopUpForm <?=$showButtonCss?>" data-form="<?= $form_id ?>"><?= $showButtonText ?></div>
     <div id="<?= $form_id ?>" class="seoclick-forms seoclick-forms-popup-wrap <?= $moduleclass_sfx; ?>">
-        <form class="form-validate">
+        <form class="form-validate" data-moduleid="<?=$module->id?>">
             <div class="container">
 				<?php if ($formTitle): ?>
                     <div class="form-title"><?= $formTitle; ?></div>
@@ -126,33 +126,56 @@ $form_id = "seoclick-form_". $module->id . '_' . rand(1, 9999999);
 					<?php endif; ?>
                     </div>
 				<?php endforeach; ?>
-				<?php
-				if ($joomlaRecapcha)
-				{
-					$recapcha = JCaptcha::getInstance('recaptcha');
-					if ($recapcha)
-					{
-						echo $recapcha->display('captcha', 'captcha', 'captcha');
-					}
-					else
-					{
-						echo JText::_("MOD_SEOCLICK_FORM_RECAPCHA_NOT_ACTIVE");
-					}
-				}
-                elseif (empty($sitekey) || empty($secretkey))
-				{
-					echo JText::_("MOD_SEOCLICK_FORMS_RECAPTCHA_KEY_ERROR");
-				}
-				else
-				{
-					echo "<div class=\"g-recaptcha\" data-sitekey=\"$sitekey\"></div>";
-				} ?>
+	            <?php
+	            if($joomlaRecapchaEnabled){
+		            if ($joomlaRecapcha)
+		            {
+			            switch ($joomlaRecapchaType){
+				            case 'invisible':
+					            $script = "var submitForm_$module->id = function(token){jQuery('#$form_id form').submit();}";
+					            $document->addScriptDeclaration($script);
+
+					            ?>
+                                <div class="g-recaptcha"
+                                     data-sitekey="<?=$sitekey?>"
+                                     data-callback="submitForm_<?=$module->id?>"
+                                     data-size="invisible">
+                                </div>
+					            <?php
+					            break;
+				            default:
+					            $recapcha = JCaptcha::getInstance('recaptcha');
+					            if ($recapcha)
+					            {
+						            echo $recapcha->display('captcha', 'captcha', 'captcha');
+					            }
+					            else
+					            {
+						            echo JText::_("MOD_SEOCLICK_FORM_RECAPCHA_NOT_ACTIVE");
+					            }
+			            }
+		            }
+                    elseif (empty($sitekey) || empty($secretkey))
+		            {
+			            echo JText::_("MOD_SEOCLICK_FORMS_RECAPTCHA_KEY_ERROR");
+		            }
+		            else
+		            {
+			            echo "<div class=\"g-recaptcha\" data-sitekey=\"$sitekey\"></div>";
+		            }
+	            }?>
                 <input type="hidden" name="module-name" value="<?= $module->title ?>"/>
                 <div class="field-wrap submit-button-wrap"><input type="submit" class="<?=$submitCss?>" value="<?= $submitText; ?>"/></div>
             </div>
         </form>
     </div>
 <?php
+$script = "var seoclickForm_$module->id = {
+    recaptchaEnabled: '$joomlaRecapchaEnabled',
+    recaptchaType: '$joomlaRecapchaType'
+};";
+$document->addScriptDeclaration($script);
+
 if ($phoneMask)
 {
 	$script = 'jQuery(function($) {

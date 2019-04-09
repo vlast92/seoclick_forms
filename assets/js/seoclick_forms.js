@@ -1,4 +1,16 @@
-"use strict";
+'use strict';
+
+//TODO сделать рендером всех рекапч вместо стандартного из Joomla
+//Рендер невидимых рекапч
+var renderInvisibleRecaptcha = function renderInvisibleRecaptcha() {
+    jQuery(function ($) {
+        $.each($('.g-recaptcha'), function (index, captcha) {
+            var widgetId = grecaptcha.render(captcha);
+
+            $(captcha).data('recaptcha-widget-id', widgetId);
+        });
+    });
+};
 
 jQuery(document).ready(function ($) {
 
@@ -19,7 +31,7 @@ jQuery(document).ready(function ($) {
         //вызываем функцию установки обработчиков на поля формы
         setEvents(inputs);
         //вешам обработчик отправки формы
-        $(form).on("submit", sendData);
+        $(form).on("submit", validateForm);
     });
 
     /*
@@ -236,19 +248,52 @@ jQuery(document).ready(function ($) {
         }
     }
 
-    //функция отправки данных на сервер
-    function sendData(event) {
+    //Валидация вложений формы
+    function checkFiles(files, form) {
+
+        var responce = { message: "", valid: true };
+
+        $.each(files, function (index, file) {
+
+            var file_size = file.size / 1000,
+                max_size = form.find(".file-input").data("size");
+
+            if (file_size > max_size) {
+
+                responce.message = "Размер файла " + file.name + " превышает допустимый размер в " + max_size + " кб. Его размер " + Math.round(file_size) + " кб.";
+                responce.valid = false;
+
+                return responce;
+            }
+        });
+
+        return responce;
+    }
+
+    //Валидация формы
+    function validateForm(event) {
 
         event.preventDefault();
 
-        var formData = new FormData(),
+        var data = void 0,
+            formData = new FormData(),
             form = $(this),
-            capchaResponse = void 0,
-            request = void 0,
-            data = void 0,
+            formParams = window["seoclickForm_" + form.data("moduleid")],
             formContainer = form.closest(".seoclick-forms"),
             messageBox = formContainer.find(".message-container"),
             files_data = form.find('.file-input')[0];
+
+        formParams.captchaWidgetID = form.find(".g-recaptcha").data("recaptcha-widget-id");
+        if (Number(formParams.recaptchaEnabled) && grecaptcha.getResponse(formParams.captchaWidgetID) === "") {
+            if (formParams.recaptchaType === 'invisible') {
+                grecaptcha.execute(formParams.captchaWidgetID);
+
+                return false;
+            }
+            messageBox.addClass("active");
+            messageBox.html("Не пройдена проверка 'Я не робот'");
+            return false;
+        }
 
         messageBox.addClass("active");
 
@@ -276,6 +321,7 @@ jQuery(document).ready(function ($) {
         formData.append('module', 'seoclick_forms');
         formData.append('format', 'json');
 
+        //Прокрутка окна браузера до окна сообщений формы
         if ($(formContainer).hasClass("seoclick-forms-popup-wrap")) {
             $(formContainer).find(".container").animate({
                 scrollTop: 0
@@ -286,11 +332,11 @@ jQuery(document).ready(function ($) {
             }, 300);
         }
 
-        capchaResponse = form.find(".g-recaptcha-response").val();
-        if (capchaResponse === "") {
-            messageBox.html("Не пройдена проверка 'Я не робот'");
-            return false;
-        }
+        sendData(formData, formParams, messageBox);
+    }
+
+    //функция отправки данных на сервер
+    function sendData(formData, formParams, messageBox) {
 
         messageBox.html("Отправка...");
 
@@ -310,31 +356,11 @@ jQuery(document).ready(function ($) {
             },
             error: function error(jqXHR, textStatus) {
                 messageBox.html('Ошибка AJAX запроса: ' + textStatus);
+            },
+            complete: function complete() {
+                if (Number(formParams.recaptchaEnabled)) grecaptcha.reset(formParams.captchaWidgetID);
             }
         });
-
-        grecaptcha.reset();
-        return true;
-    }
-    function checkFiles(files, form) {
-
-        var responce = { message: "", valid: true };
-
-        $.each(files, function (index, file) {
-
-            var file_size = file.size / 1000,
-                max_size = form.find(".file-input").data("size");
-
-            if (file_size > max_size) {
-
-                responce.message = "Размер файла " + file.name + " превышает допустимый размер в " + max_size + " кб. Его размер " + Math.round(file_size) + " кб.";
-                responce.valid = false;
-
-                return responce;
-            }
-        });
-
-        return responce;
     }
 });
 //# sourceMappingURL=seoclick_forms.js.map

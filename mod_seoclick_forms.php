@@ -17,20 +17,34 @@ $document = JFactory::getDocument();
 if ($params->get("load_styles"))
 {
 	$document->addStyleSheet($module_assets . '/css/seoclick_forms_styles.min.css?v='
-		. filemtime($_SERVER['DOCUMENT_ROOT'] . $module_assets . '/css/seoclick_forms_styles.min.css'));
+		. filemtime(JPATH_BASE . $module_assets . '/css/seoclick_forms_styles.min.css'));
 }
 JHtml::_('jquery.framework');
-$document->addScript($module_assets . '/js/seoclick_forms.js?v='
-	. filemtime($_SERVER['DOCUMENT_ROOT'] . $module_assets . '/js/seoclick_forms.min.js'));
+$document->addScript($module_assets . '/js/seoclick_forms.min.js?v='
+	. filemtime(JPATH_BASE . $module_assets . '/js/seoclick_forms.min.js'));
 
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
+
+$joomlaRecapchaEnabled = $params->get("use_recaptcha");
+$joomlaRecapchaType  = $params->get("recaptcha_type");
 $joomlaRecapcha  = $params->get("joomla_recapcha");
-if (!$joomlaRecapcha)
+if($joomlaRecapchaEnabled)
 {
-	$document->addScript('https://www.google.com/recaptcha/api.js', 'text/javascript', true, true);
-	$sitekey   = $params->get("joomla_recapcha_sitekey");
-	$secretkey = $params->get("joomla_recapcha_secretkey");
+	if($joomlaRecapchaType == 'invisible' && $joomlaRecapcha){
+		$document->addScript('https://www.google.com/recaptcha/api.js?onload=renderInvisibleRecaptcha&render=explicit&hl=ru-RU', 'text/javascript', true, true);
+		$invisibleRecaptcha = JPluginHelper::getPlugin('captcha', 'recaptcha_invisible');
+		$invisibleCaptchaParams = new JRegistry($invisibleRecaptcha->params);
+		$sitekey = $invisibleCaptchaParams->get("public_key");
+		$secretkey = $invisibleCaptchaParams->get("private_key");
+	}
+	else
+	{
+		$document->addScript('https://www.google.com/recaptcha/api.js?onload=JoomlaInitReCaptcha2&render=explicit&hl=ru-RU', 'text/javascript', true, true);
+		$sitekey   = $params->get("joomla_recapcha_sitekey");
+		$secretkey = $params->get("joomla_recapcha_secretkey");
+	}
 }
+
 $formFields     = json_decode(json_encode($params->get("form_fields")), true);
 $layout         = $params->get('layout', 'default');
 $showButtonText = $params->get('show_button_text', JText::_("MOD_SEOCLICK_FORMS_SHOW_FORM_DEFAULT_LABEL"));

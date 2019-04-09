@@ -34,8 +34,7 @@ class ModSeoclickFormsHelper
 
 		self::getModuleParams();
 
-		if (!self::checkCaptchaResponse())
-		{
+		if(self::$moduleParams->get("use_recaptcha") && !self::checkCaptchaResponse()){
 			JLog::add(JText::_('MOD_SEOCLICK_FORM_CAPTCHA_ERROR'), JLog::ERROR, 'mod_seoclick_forms');
 
 			return JText::_("MOD_SEOCLICK_FORM_CAPTCHA_ERROR");
@@ -61,8 +60,15 @@ class ModSeoclickFormsHelper
 	{
 		if (self::$moduleParams->get("joomla_recapcha"))
 		{
-			JPluginHelper::importPlugin('captcha');
-			$dispatcher = JEventDispatcher::getInstance();
+			switch (self::$moduleParams->get("recaptcha_type")){
+				case "invisible":
+					JPluginHelper::importPlugin('captcha', 'recaptcha_invisible');
+					$dispatcher = JEventDispatcher::getInstance("recaptcha_invisible");
+					break;
+				default:
+					JPluginHelper::importPlugin('captcha', 'recaptcha');
+					$dispatcher = JEventDispatcher::getInstance();
+			}
 			$answer     = $dispatcher->trigger('onCheckAnswer');
 
 			if (!$answer[0]) return false;
