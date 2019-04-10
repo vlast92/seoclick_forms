@@ -12,7 +12,7 @@ class ModSeoclickFormsHelper
 {
 	static private $formData, $moduleParams, $email,
 		$sitePattern = '/^[\w \.]+[\.]{1}[\D]{2,4}$/',
-		$phonePattern = '/^[\d \+]{1,5}[\( \d \) \s]{1,10}[-?\d \s]+$/',
+		$phonePattern = '/^[\+ \- \( \d \) \s]{7,}/',
 		$emailPattern = '/^[\w \.]+[@]{1}[\w]+[\.]{1}[\D]{2,4}$/';
 
 	/*
@@ -241,10 +241,10 @@ class ModSeoclickFormsHelper
 		}
 		else
 		{
-			$pattern = '/' . $pattern . '/';
+			$pattern = '/' . $pattern . '/u';
 		}
 
-		if (strlen($data) > $maxLength) return false;
+		if (mb_strlen($data) > $maxLength) return false;
 
 		if ($pattern && !preg_match($pattern, $data)) return false;
 
