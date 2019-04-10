@@ -27,6 +27,7 @@ $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 
 $joomlaRecapchaEnabled = $params->get("use_recaptcha");
 $joomlaRecapchaType  = $params->get("recaptcha_type");
+$joomlaRecapchaPosition  = $params->get("recaptcha_position");
 $joomlaRecapcha  = $params->get("joomla_recapcha");
 if($joomlaRecapchaEnabled)
 {

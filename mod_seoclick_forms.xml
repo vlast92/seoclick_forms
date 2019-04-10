@@ -45,6 +45,15 @@
                     <option value="flags">MOD_SEOCLICK_FORMS_RECAPTCHA_TYPE_FLAGS</option>
                     <option value="invisible">MOD_SEOCLICK_FORMS_RECAPTCHA_TYPE_INVISIBLE</option>
                 </field>
+                <field name="recaptcha_position"
+                       label="MOD_SEOCLICK_FORMS_RECAPTCHA_POSITION"
+                       type="list"
+                       multiple="false"
+                       default="bottomright"
+                       showon = "recaptcha_type:invisible">
+                    <option value="bottomright">MOD_SEOCLICK_FORMS_RECAPTCHA_POSITION_RIGHT</option>
+                    <option value="bottomleft">MOD_SEOCLICK_FORMS_RECAPTCHA_POSITION_LEFT</option>
+                </field>
 				<field
 						name="joomla_recapcha"
 						type="radio"

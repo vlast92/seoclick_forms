@@ -132,6 +132,7 @@ $form_id = "seoclick-form_". $module->id;
 
                             ?>
                             <div class="g-recaptcha"
+                                 data-badge="<?=$joomlaRecapchaPosition?>"
                                  data-sitekey="<?=$sitekey?>"
                                  data-callback="submitForm_<?=$module->id?>"
                                  data-size="invisible">
