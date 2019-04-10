@@ -102,11 +102,10 @@
                         size="50" />
 				<field
 						name="email"
-						type="email"
+						type="text"
 						label="MOD_SEOCLICK_FORMS_EMAIL_LABEL"
 						description="MOD_SEOCLICK_FORMS_EMAIL_DESCRIPTION"
-						size="50"
-						validate="email" />
+						size="50"/>
 				<field
 						name="mailfrom"
 						type="email"
