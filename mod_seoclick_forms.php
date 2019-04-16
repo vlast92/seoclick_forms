@@ -31,16 +31,22 @@ $joomlaRecapchaPosition  = $params->get("recaptcha_position");
 $joomlaRecapcha  = $params->get("joomla_recapcha");
 if($joomlaRecapchaEnabled)
 {
+	$document->addScript('https://www.google.com/recaptcha/api.js?onload=renderRecaptcha&render=explicit&hl=ru-RU', 'text/javascript', true, true);
+
 	if($joomlaRecapchaType == 'invisible' && $joomlaRecapcha){
-		$document->addScript('https://www.google.com/recaptcha/api.js?onload=renderInvisibleRecaptcha&render=explicit&hl=ru-RU', 'text/javascript', true, true);
 		$invisibleRecaptcha = JPluginHelper::getPlugin('captcha', 'recaptcha_invisible');
 		$invisibleCaptchaParams = new JRegistry($invisibleRecaptcha->params);
 		$sitekey = $invisibleCaptchaParams->get("public_key");
 		$secretkey = $invisibleCaptchaParams->get("private_key");
 	}
+	elseif ($joomlaRecapcha){
+		$recaptcha = JPluginHelper::getPlugin('captcha', 'recaptcha');
+		$recaptchaParams = new JRegistry($recaptcha->params);
+		$sitekey = $recaptchaParams->get("public_key");
+		$secretkey = $recaptchaParams->get("private_key");
+	}
 	else
 	{
-		$document->addScript('https://www.google.com/recaptcha/api.js?onload=JoomlaInitReCaptcha2&render=explicit&hl=ru-RU', 'text/javascript', true, true);
 		$sitekey   = $params->get("joomla_recapcha_sitekey");
 		$secretkey = $params->get("joomla_recapcha_secretkey");
 	}

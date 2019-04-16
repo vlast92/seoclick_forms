@@ -128,41 +128,32 @@ $form_id = "seoclick-form_". $module->id;
 				<?php endforeach; ?>
 	            <?php
 	            if($joomlaRecapchaEnabled){
-		            if ($joomlaRecapcha)
-		            {
-			            switch ($joomlaRecapchaType){
-				            case 'invisible':
-					            $script = "var submitForm_$module->id = function(token){jQuery('#$form_id form').submit();}";
-					            $document->addScriptDeclaration($script);
 
-					            ?>
-                                <div class="g-recaptcha"
-                                     data-badge="<?=$joomlaRecapchaPosition?>"
-                                     data-sitekey="<?=$sitekey?>"
-                                     data-callback="submitForm_<?=$module->id?>"
-                                     data-size="invisible">
-                                </div>
-					            <?php
-					            break;
-				            default:
-					            $recapcha = JCaptcha::getInstance('recaptcha');
-					            if ($recapcha)
-					            {
-						            echo $recapcha->display('captcha', 'captcha', 'captcha');
-					            }
-					            else
-					            {
-						            echo JText::_("MOD_SEOCLICK_FORM_RECAPCHA_NOT_ACTIVE");
-					            }
-			            }
-		            }
-                    elseif (empty($sitekey) || empty($secretkey))
+		            if (empty($sitekey) || empty($secretkey))
 		            {
 			            echo JText::_("MOD_SEOCLICK_FORMS_RECAPTCHA_KEY_ERROR");
 		            }
-		            else
-		            {
-			            echo "<div class=\"g-recaptcha\" data-sitekey=\"$sitekey\"></div>";
+
+		            switch ($joomlaRecapchaType){
+			            case 'invisible':
+				            $script = "
+                                jQuery(function($){
+                                     var invisibleRecaptcha = '<div class=\"g-recaptcha seoclick invisible-recaptcha\" data-badge=\"$joomlaRecapchaPosition\" data-sitekey=\"$sitekey\" data-callback=\"submitSeoclickForm\" data-size=\"invisible\"></div>';
+                                     
+				                     if(!$('.invisible-recaptcha').length) $('body').append(invisibleRecaptcha);
+                                });
+				            ";
+				            $document->addScriptDeclaration($script);
+
+				            break;
+			            default:
+				            ?>
+                            <div class="g-recaptcha seoclick"
+                                 data-sitekey="<?=$sitekey?>"
+                                 data-theme="light"
+                                 data-size="normal">
+                            </div>
+			            <?php
 		            }
 	            }?>
                 <input type="hidden" name="module-name" value="<?= $module->title ?>"/>

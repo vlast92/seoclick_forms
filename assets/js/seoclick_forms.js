@@ -1,16 +1,60 @@
 'use strict';
 
-//TODO сделать рендером всех рекапч вместо стандартного из Joomla
-//Рендер невидимых рекапч
-var renderInvisibleRecaptcha = function renderInvisibleRecaptcha() {
+var renderRecaptcha = function renderRecaptcha() {
     jQuery(function ($) {
-        $.each($('.g-recaptcha'), function (index, captcha) {
+        $.each($('.g-recaptcha.seoclick'), function (index, captcha) {
             var widgetId = grecaptcha.render(captcha);
 
             $(captcha).data('recaptcha-widget-id', widgetId);
         });
     });
 };
+
+function submitSeoclickForm(token) {
+
+    var module_id = getCookie('seoclick_send_form_id');
+
+    deleteCookie('seoclick_send_form_id');
+    jQuery('#seoclick-form_' + module_id + ' form').submit();
+}
+// возвращает cookie с именем name, если есть, если нет, то undefined
+function getCookie(name) {
+    var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+function setCookie(name, value, options) {
+    options = options || {};
+
+    var expires = options.expires;
+
+    if (typeof expires === "number" && expires) {
+        var d = new Date();
+        d.setTime(d.getTime() + expires * 1000);
+        expires = options.expires = d;
+    }
+    if (expires && expires.toUTCString) {
+        options.expires = expires.toUTCString();
+    }
+
+    value = encodeURIComponent(value);
+
+    var updatedCookie = name + "=" + value;
+
+    for (var propName in options) {
+        updatedCookie += "; " + propName;
+        var propValue = options[propName];
+        if (propValue !== true) {
+            updatedCookie += "=" + propValue;
+        }
+    }
+
+    document.cookie = updatedCookie;
+}
+function deleteCookie(name) {
+    setCookie(name, "", {
+        expires: -1
+    });
+}
 
 jQuery(document).ready(function ($) {
 
@@ -281,18 +325,32 @@ jQuery(document).ready(function ($) {
             formParams = window["seoclickForm_" + form.data("moduleid")],
             formContainer = form.closest(".seoclick-forms"),
             messageBox = formContainer.find(".message-container"),
-            files_data = form.find('.file-input')[0];
+            files_data = form.find('.file-input')[0],
+            recaptchaResponce = void 0;
 
-        formParams.captchaWidgetID = form.find(".g-recaptcha").data("recaptcha-widget-id");
-        if (Number(formParams.recaptchaEnabled) && grecaptcha.getResponse(formParams.captchaWidgetID) === "") {
+        if (Number(formParams.recaptchaEnabled)) {
+
             if (formParams.recaptchaType === 'invisible') {
-                grecaptcha.execute(formParams.captchaWidgetID);
+                formParams.captchaWidgetID = $(".invisible-recaptcha").data("recaptcha-widget-id");
 
-                return false;
+                recaptchaResponce = grecaptcha.getResponse(formParams.captchaWidgetID);
+                if (recaptchaResponce === "") {
+
+                    setCookie("seoclick_send_form_id", form.data("moduleid"));
+                    grecaptcha.execute(formParams.captchaWidgetID);
+
+                    return false;
+                }
+            } else {
+                formParams.captchaWidgetID = form.find(".g-recaptcha").data("recaptcha-widget-id");
+                recaptchaResponce = grecaptcha.getResponse(formParams.captchaWidgetID);
+                if (recaptchaResponce === "") {
+                    messageBox.addClass("active");
+                    messageBox.html("Не пройдена проверка 'Я не робот'");
+
+                    return false;
+                }
             }
-            messageBox.addClass("active");
-            messageBox.html("Не пройдена проверка 'Я не робот'");
-            return false;
         }
 
         messageBox.addClass("active");
@@ -320,6 +378,7 @@ jQuery(document).ready(function ($) {
         formData.append('option', 'com_ajax');
         formData.append('module', 'seoclick_forms');
         formData.append('format', 'json');
+        formData.append('g-recaptcha-response', recaptchaResponce);
 
         //Прокрутка окна браузера до окна сообщений формы
         if ($(formContainer).hasClass("seoclick-forms-popup-wrap")) {
