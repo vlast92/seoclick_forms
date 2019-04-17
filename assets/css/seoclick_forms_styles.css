@@ -89,8 +89,9 @@
       .seoclick-forms .field-wrap .invalid-tooltip > div {
         background-color: #fff;
         padding: .25rem .5rem; }
-  .seoclick-forms .g-recaptcha > div {
-    margin: 0 0 1rem 0;
-    z-index: 1; }
+
+.g-recaptcha > div {
+  margin: 0 0 1rem 0;
+  z-index: 100; }
 
 /*# sourceMappingURL=seoclick_forms_styles.css.map */
