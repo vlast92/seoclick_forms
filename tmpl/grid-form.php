@@ -55,6 +55,7 @@ $form_id = "seoclick-form_". $module->id;
 								<?php endif; ?>
 				                    <?php if ($formField['placeholder']): ?>
                                         placeholder="<?= $formField['placeholder']; ?>"
+                                        title="<?= $formField['placeholder']; ?>"
 				                    <?php endif; ?>></textarea>
 			                    <?php break; ?>
 		                    <?php case "select": ?>
@@ -81,6 +82,33 @@ $form_id = "seoclick-form_". $module->id;
                                        accept="<?=$formField["filetypes"]?>"
                                        name="atachment[]"
                                        type="file" />
+			                    <?php break; ?>
+		                    <?php case "date": ?>
+                                <input
+                                        maxlength="<?= $formField['maxlength']; ?>"
+				                    <?php if ($formField['validation']): ?>
+                                        class="validate"
+                                        data-validate="<?= $formField['type']; ?>"
+					                    <?php if (!$formField['default_validation']):?>
+						                    <?php if ($formField['pattern']): ?>
+                                                pattern="<?= $formField['pattern'] ?>"
+						                    <?php endif; ?>
+						                    <?php if ($formField['tooltip']): ?>
+                                                data-tooltip="<?= $formField['tooltip'] ?>"
+						                    <?php endif; ?>
+					                    <?php endif; ?>
+				                    <?php endif; ?>
+                                        name="<?= $name; ?>"
+				                    <?php if ($formField['required']): ?>
+                                        required=""
+				                    <?php endif; ?>
+                                        type="text"
+                                        onfocus="this.type='date'"
+				                    <?php if ($formField['placeholder']): ?>
+                                        placeholder="<?= $formField['placeholder']; ?>"
+                                        title="<?= $formField['placeholder']; ?>"
+				                    <?php endif; ?>
+                                />
 			                    <?php break; ?>
 		                    <?php default: ?>
                                 <input
@@ -112,6 +140,7 @@ $form_id = "seoclick-form_". $module->id;
 				                    <?php endif; ?>
 				                    <?php if ($formField['placeholder']): ?>
                                         placeholder="<?= $formField['placeholder']; ?>"
+                                        title="<?= $formField['placeholder']; ?>"
 				                    <?php endif; ?>
                                 />
 		                    <?php endswitch; ?>

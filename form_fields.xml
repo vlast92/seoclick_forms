@@ -81,7 +81,7 @@
                 label="MOD_SEOCLICK_FORMS_PLACEHOLDER_LABEL"
                 description="MOD_SEOCLICK_FORMS_PLACEHOLDER_DESCRIPTION"
                 size="50"
-                showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date"/>
+                showon="type!:file[AND]type!:line_text[AND]type!:hidden"/>
         <field name="maxlength"
                type="number"
                default="100"
