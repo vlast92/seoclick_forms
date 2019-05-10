@@ -324,4 +324,32 @@ class ModSeoclickFormsHelper
 
 		return $response;
 	}
+
+	public static function addModuleAsset($path, $type){
+
+		$module_assets = '/modules/mod_seoclick_forms/assets';
+		$module_overrides = '/modules/mod_seoclick_forms/overrides';
+		$document = JFactory::getDocument();
+		$application = JFactory::getApplication();
+
+		if(is_file(JPATH_BASE . $module_overrides . $path)){
+			$url = $module_overrides . $path . '?v='
+				. filemtime(JPATH_BASE . $module_overrides . $path);
+		}elseif(is_file(JPATH_BASE . $module_assets . $path)){
+			$url = $module_assets . $path . '?v='
+				. filemtime(JPATH_BASE . $module_assets . $path);
+		}else{
+			$application->enqueueMessage(JText::sprintf('MOD_SEOCLICK_FORMS_FILE_NOT_FOUND', JPATH_BASE . $module_overrides . $path), 'error');
+			$application->enqueueMessage(JText::sprintf('MOD_SEOCLICK_FORMS_FILE_NOT_FOUND', JPATH_BASE . $module_assets . $path), 'error');
+		}
+
+		switch ($type){
+			case 'css':
+				$document->addStyleSheet($url);
+				break;
+			case 'js':
+				$document->addScript($url);
+				break;
+		}
+	}
 }

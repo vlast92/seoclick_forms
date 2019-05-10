@@ -16,6 +16,7 @@
 		<folder>language</folder>
 		<folder>assets</folder>
         <folder>sources</folder>
+        <folder>overrides</folder>
 		<filename>form_fields.xml</filename>
 		<filename>mod_seoclick_forms.xml</filename>
         <filename>helper.php</filename>

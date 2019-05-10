@@ -11,17 +11,18 @@ defined('_JEXEC') or die;
 
 require_once dirname(__FILE__) . '/helper.php';
 
-$module_assets = '/modules/mod_seoclick_forms/assets';
+/*$module_assets = '/modules/mod_seoclick_forms/assets';
+$module_overrides = '/modules/mod_seoclick_forms/overrides';*/
 
 $document = JFactory::getDocument();
 if ($params->get("load_styles"))
 {
-	$document->addStyleSheet($module_assets . '/css/seoclick_forms_styles.min.css?v='
-		. filemtime(JPATH_BASE . $module_assets . '/css/seoclick_forms_styles.min.css'));
+	ModSeoclickFormsHelper::addModuleAsset('/css/seoclick_forms_styles.min.css', 'css');
 }
 JHtml::_('jquery.framework');
-$document->addScript($module_assets . '/js/seoclick_forms.min.js?v='
-	. filemtime(JPATH_BASE . $module_assets . '/js/seoclick_forms.min.js'));
+
+ModSeoclickFormsHelper::addModuleAsset('/js/seoclick_forms.min.js', 'js');
+
 
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 

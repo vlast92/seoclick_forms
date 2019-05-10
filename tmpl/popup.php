@@ -10,10 +10,9 @@
 
 defined('_JEXEC') or die;
 
-$document->addStyleSheet($module_assets . '/css/popup_form_styles.min.css?v='
-	. filemtime(JPATH_BASE . $module_assets . '/css/popup_form_styles.min.css'));
-$document->addScript($module_assets . '/js/popup.min.js?v='
-	. filemtime(JPATH_BASE . $module_assets . '/js/popup.min.js'));
+ModSeoclickFormsHelper::addModuleAsset('/css/popup_form_styles.min.css', 'css');
+ModSeoclickFormsHelper::addModuleAsset('/js/popup.min.js', 'js');
+
 
 $key = 0;
 $form_id = "seoclick-form_". $module->id;
