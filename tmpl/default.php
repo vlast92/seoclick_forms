@@ -19,6 +19,7 @@ $form_id = "seoclick-form_". $module->id;
 			<?php if ($formTitle): ?>
                 <div class="form-title"><?= $formTitle; ?></div>
 			<?php endif; ?>
+            <div class="text-field"><?=$formText?></div>
             <div class="message-container"></div>
 			<?php foreach ($formFields as $formField): ?>
 				<?php $name = "form_fields" . $key++; ?>
@@ -197,6 +198,9 @@ if ($phoneMask)
 	        $("#' . $form_id . '").find("[data-validate = \'phone\']").mask("' . $phoneMask . '");
 	    });';
 
-	$document->addScript($module_assets . '/js/jquery.maskedinput-1.2.2.min.js');
+	ModSeoclickFormsHelper::addModuleAsset('/js/jquery.maskedinput-1.2.2.min.js', 'js');
 	$document->addScriptDeclaration($script);
 }
+
+$additionalJs = "jQuery(document).ready(function($){ var $ = jQuery, form = $('#$form_id');" . $additionalJs . "});";
+$document->addScriptDeclaration($additionalJs);

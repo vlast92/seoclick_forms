@@ -11,9 +11,6 @@ defined('_JEXEC') or die;
 
 require_once dirname(__FILE__) . '/helper.php';
 
-/*$module_assets = '/modules/mod_seoclick_forms/assets';
-$module_overrides = '/modules/mod_seoclick_forms/overrides';*/
-
 $document = JFactory::getDocument();
 if ($params->get("load_styles"))
 {
@@ -58,9 +55,11 @@ $layout         = $params->get('layout', 'default');
 $showButtonText = $params->get('show_button_text', JText::_("MOD_SEOCLICK_FORMS_SHOW_FORM_DEFAULT_LABEL"));
 $showButtonCss  = $params->get('show_button_css');
 $formTitle      = $params->get("title", false);
+$formText       = $params->get("form_text", false);
 $phoneMask      = $params->get("phone_mask", false);
 $submitText     = $params->get("submit_text", jText::_("MOD_SEOCLICK_FORMS_SUBMIT_TEXT_DEFAULT"));
 $submitCss      = $params->get("submit_css");
+$additionalJs   = $params->get("additional_js", false);
 
 $namesArr = array();
 
