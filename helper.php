@@ -277,9 +277,11 @@ class ModSeoclickFormsHelper
 			{
 				$fieldSettings = true;
 				$maxFileSize   = $formField['filesize'];
-				$allowedFilesMimes = $formField['filemimes'];
+				$allowedFilesMimes = str_replace("\t", '', $formField['filemimes']);
 			}
 		}
+
+		$allowedFilesMimes = explode(',', $allowedFilesMimes);
 
 		if (!$fieldSettings)
 		{
@@ -300,7 +302,6 @@ class ModSeoclickFormsHelper
 			$filename = $file['name'];
 
 			$fileMime = mime_content_type($filePath);
-			$allowedFilesMimes = explode(',', $allowedFilesMimes);
 			if(array_search($fileMime, $allowedFilesMimes) === false){
 				$response['message'] = jText::_("MOD_SEOCLICK_FORMS_MIME_ERROR");
 				return $response;

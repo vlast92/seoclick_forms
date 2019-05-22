@@ -92,6 +92,18 @@
                step="1"
                size="4"
                showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date"/>
+        <field name="multiple"
+               type="checkbox"
+               label="MOD_SEOCLICK_FORMS_MULTIPLE_LABEL"
+               description="MOD_SEOCLICK_FORMS_MULTIPLE_DESCRIPTION"
+               value="1"
+               showon="type:file"/>
+        <field
+                name="button_css"
+                type="text"
+                label="MOD_SEOCLICK_FORMS_BUTTON_CSS_LABEL"
+                size="50"
+                showon="type:file"/>
         <field name="filesize"
                type="number"
                default="1000"
