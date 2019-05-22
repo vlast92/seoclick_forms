@@ -121,13 +121,13 @@
                label="MOD_SEOCLICK_FORMS_MAX_FILETYPES_LABEL"
                description="MOD_SEOCLICK_FORMS_MAX_FILETYPES_DESCRIPTION"
                showon="type:file"/>
-        <field name="filemimes"
+<!--        <field name="filemimes"
                type="textarea"
                rows="5"
                default="text/plain"
                label="MOD_SEOCLICK_FORMS_MAX_FILEMIMES_LABEL"
                description="MOD_SEOCLICK_FORMS_MAX_FILEMIMES_DESCRIPTION"
-               showon="type:file"/>
+               showon="type:file"/>-->
         <field name="css"
                type="text"
                label="MOD_SEOCLICK_FORMS_CSS_CLASS"

@@ -266,62 +266,66 @@ class ModSeoclickFormsHelper
 
 		$response      = array('fileMarkup' => '', 'message' => false);
 		$filesMarkup   = '';
+		$allowedFilesMimes = array();
+		$filesMimes = json_decode(file_get_contents(__DIR__ ."/assets/mime_types.json"), true);
 		$fieldSettings = false;
-		$maxFileSize = '';
-		$allowedFilesMimes = '';
 
 		$formFields = json_decode(json_encode(self::$moduleParams->get("form_fields")), true);
 		foreach ($formFields as $formField)
 		{
-			if ($formField['type'] === 'file')
-			{
-				$fieldSettings = true;
-				$maxFileSize   = $formField['filesize'];
-				$allowedFilesMimes = str_replace("\t", '', $formField['filemimes']);
+			if ($formField['type'] !== 'file') continue;
+
+			$fieldSettings = true;
+			$maxFileSize   = $formField['filesize'];
+			$allowedFilesTypes = explode(',',$formField['filetypes']);
+
+			foreach ($allowedFilesTypes as $allowedFileType){
+				$allowedFileType = str_replace(array(".","\t"), '', $allowedFileType);
+				$allowedFilesMimes[$allowedFileType] = $filesMimes[$allowedFileType];
 			}
+
+			foreach ($files as $file)
+			{
+				if ($file["size"] / 1000 > $maxFileSize)
+				{
+					$response['message'] = jText::_("MOD_SEOCLICK_FORMS_ERROR_FILESIZE");
+					return $response;
+				}
+
+				$filePath = $file['tmp_name'];
+				$filename = $file['name'];
+				preg_match('/[.]{1}[\w]{2,}$/', $filename, $fileType);
+
+				$fileType = str_replace('.', '', $fileType[0]);
+				$fileMime = mime_content_type($filePath);
+
+				if(!in_array($fileMime, $allowedFilesMimes[$fileType])){
+					$response['message'] = jText::_("MOD_SEOCLICK_FORMS_MIME_ERROR");
+					return $response;
+				}
+
+				if (!$file = file_get_contents($filePath))
+				{
+					$response['message'] = jText::_("MOD_SEOCLICK_FORMS_ERROR_NOFILE");
+					return $response;
+				}
+
+				$filesMarkup .= "\r\n--" . $boundary . "\r\n";
+				$filesMarkup .= "Content-Type: application/octet-stream; name=\"" . $filename . "\"\r\n";
+				$filesMarkup .= "Content-Transfer-Encoding: base64\r\n";
+				$filesMarkup .= "Content-Disposition: attachment; filename=\"" . $filename . "\"\r\n";
+				$filesMarkup .= "\r\n";
+				$filesMarkup .= chunk_split(base64_encode($file));
+			}
+			$filesMarkup            .= "\r\n--" . $boundary . "--\r\n";
+			$response['fileMarkup'] = $filesMarkup;
 		}
-
-		$allowedFilesMimes = explode(',', $allowedFilesMimes);
-
 		if (!$fieldSettings)
 		{
 			$response['message'] = jText::_("MOD_SEOCLICK_FORMS_ERROR_FILE_NOSETTINGS");
 
 			return $response;
 		}
-
-		foreach ($files as $file)
-		{
-			if ($file["size"] / 1000 > $maxFileSize)
-			{
-				$response['message'] = jText::_("MOD_SEOCLICK_FORMS_ERROR_FILESIZE");
-				return $response;
-			}
-
-			$filePath = $file['tmp_name'];
-			$filename = $file['name'];
-
-			$fileMime = mime_content_type($filePath);
-			if(array_search($fileMime, $allowedFilesMimes) === false){
-				$response['message'] = jText::_("MOD_SEOCLICK_FORMS_MIME_ERROR");
-				return $response;
-			}
-
-			if (!$file = file_get_contents($filePath))
-			{
-				$response['message'] = jText::_("MOD_SEOCLICK_FORMS_ERROR_NOFILE");
-				return $response;
-			}
-
-			$filesMarkup .= "\r\n--" . $boundary . "\r\n";
-			$filesMarkup .= "Content-Type: application/octet-stream; name=\"" . $filename . "\"\r\n";
-			$filesMarkup .= "Content-Transfer-Encoding: base64\r\n";
-			$filesMarkup .= "Content-Disposition: attachment; filename=\"" . $filename . "\"\r\n";
-			$filesMarkup .= "\r\n";
-			$filesMarkup .= chunk_split(base64_encode($file));
-		}
-		$filesMarkup            .= "\r\n--" . $boundary . "--\r\n";
-		$response['fileMarkup'] = $filesMarkup;
 
 		return $response;
 	}
