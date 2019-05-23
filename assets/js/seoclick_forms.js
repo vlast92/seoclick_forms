@@ -62,7 +62,7 @@ jQuery(document).ready(function ($) {
         sitePattern = "^[\\w \\.]+[\\.]{1}[\\D]{2,4}$",
         phonePattern = "^[\\+ \\- \\( \\d \\) \\s]{7,}",
         emailPattern = "^[\\w \\.]+[@]{1}[\\w]+[\\.]{1}[\\D]{2,4}$",
-        forms = $(".form-validate"),
+        forms = $(".seoclick-forms .form-validate"),
         default_site_tooltip_text = "Адрес должен быть в формате site.domain",
         default_email_tooltip_text = "Email должен быть в формате mailbox@mail.domain",
         default_phone_tooltip_text = "Минимальная длина телефона - 7 символов. Разрешен ввод только цифр, пробелов и символов: (, ), -, +";

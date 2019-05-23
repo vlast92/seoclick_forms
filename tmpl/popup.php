@@ -15,7 +15,7 @@ ModSeoclickFormsHelper::addModuleAsset('/js/popup.min.js', 'js');
 
 
 $key = 0;
-$form_id = "seoclick-form_". $module->id;
+$form_id = "seoclick-form_". $module->id . "_" . rand(1, 10000);
 ?>
     <div class="seoclickFormsShowpopUpForm <?=$showButtonCss?>" data-form="<?= $form_id ?>"><?= $showButtonText ?></div>
     <div id="<?= $form_id ?>" class="seoclick-forms seoclick-forms-popup-wrap <?= $moduleclass_sfx; ?>">

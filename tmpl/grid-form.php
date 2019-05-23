@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 $key = 0;
-$form_id = "seoclick-form_". $module->id;
+$form_id = "seoclick-form_". $module->id . "_" . rand(1, 10000);
 ?>
 <div id="<?=$form_id?>" class="form-wrap seoclick-forms <?= $moduleclass_sfx; ?>">
     <form class="form-validate" data-moduleid="<?=$module->id?>">

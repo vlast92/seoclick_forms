@@ -17,7 +17,7 @@ $document->addScript($module_assets . '/js/seoclick-animated-form.min.js?v='
 
 $key = 0;
 
-$form_id = "seoclick-form_". $module->id;
+$form_id = "seoclick-form_". $module->id . "_" . rand(1, 10000);
 ?>
 <div id="<?=$form_id?>" class="form-wrap seoclick-forms <?= $moduleclass_sfx; ?>">
     <div class="message-container"></div>
