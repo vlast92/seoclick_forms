@@ -17,7 +17,7 @@ $document->addScript($module_assets . '/js/seoclick-animated-form.min.js?v='
 
 $key = 0;
 
-$form_id = "seoclick-form_". $module->id;
+$form_id = "seoclick-form_". $module->id . "_" . rand(1, 10000);
 ?>
 <div id="<?=$form_id?>" class="form-wrap seoclick-forms <?= $moduleclass_sfx; ?>">
     <div class="message-container"></div>
@@ -25,6 +25,7 @@ $form_id = "seoclick-form_". $module->id;
 		<?php if ($formTitle): ?>
             <div class="form-title"><?= $formTitle; ?></div>
 		<?php endif; ?>
+        <div class="text-field"><?=$formText?></div>
 		<?php foreach ($formFields as $formField): ?>
 			<?php $name = "form_fields".$key++;?>
             <div class="field-wrap  <?= $formField['css'] ?>">
@@ -35,91 +36,25 @@ $form_id = "seoclick-form_". $module->id;
 	                    <?php if ($formField['required']): ?><span class="required">*</span><?php endif;?>
                     </span>
 					<?php endif; ?>
-	                <?php switch ($formField['type']):
-		                case "line_text":?>
-			                <?php break;
-                        case "textarea":
-			                ?>
-                            <textarea
-                                    maxlength="<?= $formField['maxlength']; ?>"
-								<?php if ($formField['validation']): ?>
-                                    class="validate"
-                                    data-validate="<?= $formField['type']; ?>"
-									<?php if (!$formField['default_validation']):?>
-										<?php if ($formField['pattern']): ?>
-                                            pattern="<?= $formField['pattern'] ?>"
-										<?php endif; ?>
-										<?php if ($formField['tooltip']): ?>
-                                            data-tooltip="<?= $formField['tooltip'] ?>"
-										<?php endif; ?>
-									<?php endif; ?>
-								<?php endif; ?>
-                                    name="<?= $name; ?>"
-								<?php if ($formField['required']): ?>
-                                    required=""
-								<?php endif; ?>
-				                <?php if ($formField['placeholder']): ?>
-                                    placeholder="<?= $formField['placeholder']; ?>"
-				                <?php endif; ?>></textarea>
-			                <?php break; ?>
-		                <?php case "select": ?>
-                            <select name="<?= $name; ?>">
-                                <option selected
-                                        disabled><?= jText::_("MOD_SEOCLICK_FORMS_SELECT_CHOOSE_OPTION") ?></option>
-				                <?php $options = explode("\r\n", $formField['select_options']);
-				                foreach ($options as $option):?>
-                                    <option value="<?= $option ?>"><?= $option ?></option>
-				                <?php endforeach; ?>
-                            </select>
-			                <?php break; ?>
-		                <?php case "file": ?>
-                            <input class="file-input"
-				                <?php if ($formField['required']): ?>
-                                    required=""
-				                <?php endif; ?>
-				                <?php if ($formField['myltiple']):?>
-                                    multiple="multiple"
-				                <?php endif; ?>
-				                <?php if ($formField['filesize']):?>
-                                    data-size="<?=$formField['filesize']?>"
-				                <?php endif; ?>
-                                   accept="<?=$formField["filetypes"]?>"
-                                   name="atachment[]"
-                                   type="file" />
-			                <?php break; ?>
-		                <?php default: ?>
-                            <input
-                                    maxlength="<?= $formField['maxlength']; ?>"
-				                <?php if ($formField['validation']): ?>
-                                    class="validate"
-                                    data-validate="<?= $formField['type']; ?>"
-					                <?php if (!$formField['default_validation']):?>
-						                <?php if ($formField['pattern']): ?>
-                                            pattern="<?= $formField['pattern'] ?>"
-						                <?php endif; ?>
-						                <?php if ($formField['tooltip']): ?>
-                                            data-tooltip="<?= $formField['tooltip'] ?>"
-						                <?php endif; ?>
-					                <?php endif; ?>
-				                <?php endif; ?>
-                                    name="<?= $name; ?>"
-				                <?php if ($formField['required']): ?>
-                                    required=""
-				                <?php endif; ?>
-				                <?php if ($formField['type'] == "email"): ?>
-                                    type="email"
-				                <?php elseif ($formField['type'] == "date"): ?>
-                                    type="date"
-				                <?php elseif ($formField['type'] == "hidden"): ?>
-                                    type="hidden"
-				                <?php else: ?>
-                                    type="text"
-				                <?php endif; ?>
-				                <?php if ($formField['placeholder']): ?>
-                                    placeholder="<?= $formField['placeholder']; ?>"
-				                <?php endif; ?>
-                            />
-		                <?php endswitch; ?>
+	                <?php switch ($formField['type'])
+	                {
+		                case "line_text":
+			                break;
+		                case "textarea":
+			                require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'field_textarea');
+			                break;
+		                case "select":
+			                require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'field_select');
+			                break;
+		                case "file":
+			                require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'field_file');
+			                break;
+		                case "date":
+			                require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'field_date');
+			                break;
+		                default:
+			                require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'field_default');
+	                } ?>
 					<?php if ($formField['label']): ?>
                 </label>
 			<?php endif; ?>
@@ -178,6 +113,9 @@ if ($phoneMask)
 	        $("#'.$form_id.'").find("[data-validate = \'phone\']").mask("' . $phoneMask . '");
 	    });';
 
-	$document->addScript($module_assets . '/js/jquery.maskedinput-1.2.2.min.js');
+	ModSeoclickFormsHelper::addModuleAsset('/js/jquery.maskedinput-1.2.2.min.js', 'js');
 	$document->addScriptDeclaration($script);
 }
+
+$additionalJs = "jQuery(document).ready(function($){ var $ = jQuery, form = $('#$form_id');" . $additionalJs . "});";
+$document->addScriptDeclaration($additionalJs);

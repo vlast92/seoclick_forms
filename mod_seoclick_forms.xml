@@ -16,6 +16,7 @@
 		<folder>language</folder>
 		<folder>assets</folder>
         <folder>sources</folder>
+        <folder>overrides</folder>
 		<filename>form_fields.xml</filename>
 		<filename>mod_seoclick_forms.xml</filename>
         <filename>helper.php</filename>
@@ -140,6 +141,12 @@
 						label="MOD_SEOCLICK_FORMS_FORM_TITLE_LABEL"
 						description="MOD_SEOCLICK_FORMS_FORM_TITLE_DESCRIPTION"
 						size="50" />
+                <field
+                        name="form_text"
+                        type="textarea"
+                        label="MOD_SEOCLICK_FORMS_FORM_TEXT_LABEL"
+                        description="MOD_SEOCLICK_FORMS_FORM_TEXT_DESCRIPTION"
+                        rows="5" />
 				<field
 						name="phone_mask"
 						type="text"
@@ -200,6 +207,12 @@
                         default="itemid">
                     <option value="itemid"></option>
                 </field>
+                <field
+                        name="additional_js"
+                        type="textarea"
+                        label="MOD_SEOCLICK_FORMS_ADDITIONAL_JS_LABEL"
+                        description="MOD_SEOCLICK_FORMS_ADDITIONAL_JS_DESCRIPTION"
+                        rows="5" />
 			</fieldset>
 		</fields>
 	</config>

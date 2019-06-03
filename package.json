@@ -7,7 +7,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
-    "uglify-js": "^3.3.24",
+    "uglify-js": "^3.5.15",
     "yuicompressor": "^2.4.8"
   },
   "scripts": {

@@ -62,10 +62,12 @@ jQuery(document).ready(function ($) {
         sitePattern = "^[\\w \\.]+[\\.]{1}[\\D]{2,4}$",
         phonePattern = "^[\\+ \\- \\( \\d \\) \\s]{7,}",
         emailPattern = "^[\\w \\.]+[@]{1}[\\w]+[\\.]{1}[\\D]{2,4}$",
-        forms = $(".form-validate"),
+        forms = $(".seoclick-forms .form-validate"),
         default_site_tooltip_text = "Адрес должен быть в формате site.domain",
         default_email_tooltip_text = "Email должен быть в формате mailbox@mail.domain",
         default_phone_tooltip_text = "Минимальная длина телефона - 7 символов. Разрешен ввод только цифр, пробелов и символов: (, ), -, +";
+
+    createCustomFileInputs();
 
     $.each(forms, function (index, form) {
 
@@ -77,6 +79,43 @@ jQuery(document).ready(function ($) {
         //вешам обработчик отправки формы
         $(form).on("submit", validateForm);
     });
+
+    function createCustomFileInputs() {
+
+        $.each($('.seoclick-forms .file-input'), function (index, input) {
+
+            var customInput = $(input).siblings('.custom-fileinput'),
+                customFileList = $(input).siblings('.custom-filelist');
+
+            customInput.click(function (e) {
+
+                e.preventDefault();
+                $(input).trigger('click');
+            });
+            $(input).change(function () {
+
+                var filesList = input.files,
+                    filesNames = '';
+
+                switch (filesList.length) {
+
+                    case 0:
+                        customFileList.text(customFileList.data('nofile'));
+                        break;
+                    case 1:
+                        customFileList.text(customFileList.data('file') + filesList[0].name);
+                        break;
+                    default:
+                        customFileList.text(customFileList.data('files') + ' ' + filesList.length);
+                        for (var i = 0; i < filesList.length; i++) {
+                            filesNames += filesList[i].name;
+                            if (i + 1 !== filesList.length) filesNames += ', ';
+                        }
+                        customFileList.attr('title', filesNames);
+                }
+            });
+        });
+    }
 
     /*
     * Функция проверяет атрибуты pattern и data-tooltip

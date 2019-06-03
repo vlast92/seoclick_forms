@@ -11,17 +11,15 @@ defined('_JEXEC') or die;
 
 require_once dirname(__FILE__) . '/helper.php';
 
-$module_assets = '/modules/mod_seoclick_forms/assets';
-
 $document = JFactory::getDocument();
 if ($params->get("load_styles"))
 {
-	$document->addStyleSheet($module_assets . '/css/seoclick_forms_styles.min.css?v='
-		. filemtime(JPATH_BASE . $module_assets . '/css/seoclick_forms_styles.min.css'));
+	ModSeoclickFormsHelper::addModuleAsset('/css/seoclick_forms_styles.min.css', 'css');
 }
 JHtml::_('jquery.framework');
-$document->addScript($module_assets . '/js/seoclick_forms.min.js?v='
-	. filemtime(JPATH_BASE . $module_assets . '/js/seoclick_forms.min.js'));
+
+ModSeoclickFormsHelper::addModuleAsset('/js/seoclick_forms.min.js', 'js');
+
 
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 
@@ -57,9 +55,11 @@ $layout         = $params->get('layout', 'default');
 $showButtonText = $params->get('show_button_text', JText::_("MOD_SEOCLICK_FORMS_SHOW_FORM_DEFAULT_LABEL"));
 $showButtonCss  = $params->get('show_button_css');
 $formTitle      = $params->get("title", false);
+$formText       = $params->get("form_text", false);
 $phoneMask      = $params->get("phone_mask", false);
 $submitText     = $params->get("submit_text", jText::_("MOD_SEOCLICK_FORMS_SUBMIT_TEXT_DEFAULT"));
 $submitCss      = $params->get("submit_css");
+$additionalJs   = $params->get("additional_js", false);
 
 $namesArr = array();
 
