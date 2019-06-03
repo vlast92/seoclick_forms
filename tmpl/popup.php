@@ -15,11 +15,11 @@ ModSeoclickFormsHelper::addModuleAsset('/js/popup.min.js', 'js');
 
 
 $key = 0;
-$form_id = "seoclick-form_". $module->id . "_" . rand(1, 10000);
+$form_id = "seoclick_form_". $module->id . "_" . rand(1, 10000);
 ?>
     <div class="seoclickFormsShowpopUpForm <?=$showButtonCss?>" data-form="<?= $form_id ?>"><?= $showButtonText ?></div>
     <div id="<?= $form_id ?>" class="seoclick-forms seoclick-forms-popup-wrap <?= $moduleclass_sfx; ?>">
-        <form class="form-validate" data-moduleid="<?=$module->id?>">
+        <form class="form-validate" data-moduleid="<?= $form_id ?>">
             <div class="container">
 				<?php if ($formTitle): ?>
                     <div class="form-title"><?= $formTitle; ?></div>
@@ -96,7 +96,7 @@ $form_id = "seoclick-form_". $module->id . "_" . rand(1, 10000);
         </form>
     </div>
 <?php
-$script = "var seoclickForm_$module->id = {
+$script = "var $form_id = {
     recaptchaEnabled: '$joomlaRecapchaEnabled',
     recaptchaType: '$joomlaRecapchaType'
 };";

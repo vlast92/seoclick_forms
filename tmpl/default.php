@@ -12,10 +12,10 @@ defined('_JEXEC') or die;
 
 $key = 0;
 
-$form_id = "seoclick-form_" . $module->id . "_" . rand(1, 10000);
+$form_id = "seoclick_form_" . $module->id . "_" . rand(1, 10000);
 ?>
     <div id="<?= $form_id ?>" class="form-wrap seoclick-forms <?= $moduleclass_sfx; ?>">
-        <form class="form-validate" data-moduleid="<?= $module->id ?>">
+        <form class="form-validate" data-moduleid="<?= $form_id ?>">
 			<?php if ($formTitle): ?>
                 <div class="form-title"><?= $formTitle; ?></div>
 			<?php endif; ?>
@@ -93,7 +93,7 @@ $form_id = "seoclick-form_" . $module->id . "_" . rand(1, 10000);
         </form>
     </div>
 <?php
-$script = "var seoclickForm_$module->id = {
+$script = "var $form_id = {
     recaptchaEnabled: '$joomlaRecapchaEnabled',
     recaptchaType: '$joomlaRecapchaType'
 };";

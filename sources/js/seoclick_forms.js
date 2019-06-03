@@ -13,7 +13,7 @@ function submitSeoclickForm(token){
     var module_id = getCookie('seoclick_send_form_id');
 
     deleteCookie('seoclick_send_form_id');
-    jQuery(`#seoclick-form_${module_id} form`).submit();
+    jQuery(`#${module_id} form`).submit();
 }
 // возвращает cookie с именем name, если есть, если нет, то undefined
 function getCookie(name) {
@@ -360,7 +360,7 @@ jQuery(document).ready(function ($) {
         let data,
             formData = new FormData(),
             form = $(this),
-            formParams = window["seoclickForm_" + form.data("moduleid")],
+            formParams = window[form.data("moduleid")],
             formContainer = form.closest(".seoclick-forms"),
             messageBox = formContainer.find(".message-container"),
             files_data = form.find('.file-input')[0],
