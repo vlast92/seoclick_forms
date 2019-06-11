@@ -130,7 +130,6 @@
                showon="type:file"/>-->
         <field name="css"
                type="text"
-               label="MOD_SEOCLICK_FORMS_CSS_CLASS"
-               showon="type!:hidden"/>
+               label="MOD_SEOCLICK_FORMS_CSS_CLASS"/>
     </fieldset>
 </form>
