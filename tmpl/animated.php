@@ -23,9 +23,11 @@ $form_id = "seoclick_form_". $module->id . "_" . rand(1, 10000);
     <div class="message-container"></div>
     <form class="form-validate" data-moduleid="<?= $form_id ?>">
 		<?php if ($formTitle): ?>
-            <div class="form-title"><?= $formTitle; ?></div>
+			<?php require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'form_title');?>
 		<?php endif; ?>
-        <div class="text-field"><?=$formText?></div>
+	    <?php if ($formText): ?>
+		    <?php require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'form_text');?>
+	    <?php endif; ?>
 		<?php foreach ($formFields as $formField): ?>
 			<?php $name = "form_fields".$key++;?>
             <div class="field-wrap  <?= $formField['css'] ?>">
