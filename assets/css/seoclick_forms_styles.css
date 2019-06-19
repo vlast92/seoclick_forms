@@ -2,7 +2,8 @@
   font-size: 100%;
   position: relative; }
   .seoclick-forms .form-validate {
-    position: relative; }
+    position: relative;
+    margin-bottom: 0; }
   .seoclick-forms .form-title {
     color: #000;
     font-size: 1.333rem;
