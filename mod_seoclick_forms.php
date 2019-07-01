@@ -63,6 +63,7 @@ var mod_seoclick_forms_language_variables = {
 	    'file_size_error_text_4' : '".JText::_("MOD_SEOCLICK_FORMS_FILE_SIZE_4")."'
     },
     'captcha_validation_error' : '".JText::_("MOD_SEOCLICK_FORM_CAPTCHA_ERROR")."',
+    'no_files_error' : '".JText::_("MOD_SEOCLICK_FORM_NO_FILES_ERROR")."',
     'sending_text' : '".JText::_("MOD_SEOCLICK_FORMS_SENDING_TEXT")."'
 };
 ";

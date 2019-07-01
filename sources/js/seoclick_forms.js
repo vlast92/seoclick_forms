@@ -394,6 +394,11 @@ jQuery(document).ready(function ($) {
         messageBox.addClass("active");
 
         if (files_data !== undefined) {
+
+            if($(files_data).next('.custom-fileinput').data('required') && files_data.files.length === 0){
+                messageBox.html(mod_seoclick_forms_language_variables.no_files_error);
+                return 0;
+            }
             files_data = files_data.files;
 
             let check = checkFiles(files_data, form);
