@@ -50,6 +50,24 @@ if($joomlaRecapchaEnabled)
 	}
 }
 
+//Print language variables
+$script = "
+var mod_seoclick_forms_language_variables = {
+    'default_site_tooltip_text' : '".JText::_("MOD_SEOCLICK_FORMS_DEFAULT_SITE_TOOLTIP")."',
+    'default_email_tooltip_text' : '".JText::_("MOD_SEOCLICK_FORMS_DEFAULT_EMAIL_TOOLTIP")."',
+    'default_phone_tooltip_text' : '".JText::_("MOD_SEOCLICK_FORMS_DEFAULT_PHONE_TOOLTIP")."',
+    'file_size_error' : {
+	    'file_size_error_text_1' : '".JText::_("MOD_SEOCLICK_FORMS_FILE_SIZE_1")."',
+	    'file_size_error_text_2' : '".JText::_("MOD_SEOCLICK_FORMS_FILE_SIZE_2")."',
+	    'file_size_error_text_3' : '".JText::_("MOD_SEOCLICK_FORMS_FILE_SIZE_3")."',
+	    'file_size_error_text_4' : '".JText::_("MOD_SEOCLICK_FORMS_FILE_SIZE_4")."'
+    },
+    'captcha_validation_error' : '".JText::_("MOD_SEOCLICK_FORM_CAPTCHA_ERROR")."',
+    'sending_text' : '".JText::_("MOD_SEOCLICK_FORMS_SENDING_TEXT")."'
+};
+";
+$document->addScriptDeclaration($script);
+
 $formFields     = json_decode(json_encode($params->get("form_fields")), true);
 $layout         = $params->get('layout', 'default');
 $showButtonText = $params->get('show_button_text', JText::_("MOD_SEOCLICK_FORMS_SHOW_FORM_DEFAULT_LABEL"));

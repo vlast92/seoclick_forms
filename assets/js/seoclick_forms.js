@@ -63,9 +63,9 @@ jQuery(document).ready(function ($) {
         phonePattern = "^[\\+ \\- \\( \\d \\) \\s]{7,}",
         emailPattern = "^[\\w \\.]+[@]{1}[\\w]+[\\.]{1}[\\D]{2,4}$",
         forms = $(".seoclick-forms .form-validate"),
-        default_site_tooltip_text = "Адрес должен быть в формате site.domain",
-        default_email_tooltip_text = "Email должен быть в формате mailbox@mail.domain",
-        default_phone_tooltip_text = "Минимальная длина телефона - 7 символов. Разрешен ввод только цифр, пробелов и символов: (, ), -, +";
+        default_site_tooltip_text = mod_seoclick_forms_language_variables.default_site_tooltip_text,
+        default_email_tooltip_text = mod_seoclick_forms_language_variables.default_email_tooltip_text,
+        default_phone_tooltip_text = mod_seoclick_forms_language_variables.default_phone_tooltip_text;
 
     createCustomFileInputs();
 
@@ -343,7 +343,7 @@ jQuery(document).ready(function ($) {
 
             if (file_size > max_size) {
 
-                responce.message = "Размер файла " + file.name + " превышает допустимый размер в " + max_size + " кб. Его размер " + Math.round(file_size) + " кб.";
+                responce.message = mod_seoclick_forms_language_variables.file_size_error.file_size_error_text_1 + file.name + mod_seoclick_forms_language_variables.file_size_error.file_size_error_text_2 + max_size + mod_seoclick_forms_language_variables.file_size_error.file_size_error_text_3 + Math.round(file_size) + mod_seoclick_forms_language_variables.file_size_error.file_size_error_text_4;
                 responce.valid = false;
 
                 return responce;
@@ -385,7 +385,7 @@ jQuery(document).ready(function ($) {
                 recaptchaResponce = grecaptcha.getResponse(formParams.captchaWidgetID);
                 if (recaptchaResponce === "") {
                     messageBox.addClass("active");
-                    messageBox.html("Не пройдена проверка 'Я не робот'");
+                    messageBox.html(mod_seoclick_forms_language_variables.captcha_validation_error);
 
                     return false;
                 }
@@ -436,7 +436,7 @@ jQuery(document).ready(function ($) {
     //функция отправки данных на сервер
     function sendData(formData, formParams, messageBox) {
 
-        messageBox.html("Отправка...");
+        messageBox.html(mod_seoclick_forms_language_variables.sending_text);
 
         $.ajax({
             type: 'POST',
@@ -453,7 +453,7 @@ jQuery(document).ready(function ($) {
                 }
             },
             error: function error(jqXHR, textStatus) {
-                messageBox.html('Ошибка AJAX запроса: ' + textStatus);
+                messageBox.html('AJAX error: ' + textStatus);
             },
             complete: function complete() {
                 if (Number(formParams.recaptchaEnabled)) grecaptcha.reset(formParams.captchaWidgetID);
