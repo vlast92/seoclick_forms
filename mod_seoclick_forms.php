@@ -29,7 +29,8 @@ $joomlaRecapchaPosition  = $params->get("recaptcha_position");
 $joomlaRecapcha  = $params->get("joomla_recapcha");
 if($joomlaRecapchaEnabled)
 {
-	$document->addScript('https://www.google.com/recaptcha/api.js?onload=renderRecaptcha&render=explicit&hl=ru-RU', 'text/javascript', true, true);
+	$lang = JFactory::getLanguage();
+	$document->addScript('https://www.google.com/recaptcha/api.js?onload=renderRecaptcha&render=explicit&hl='.$lang->getTag(), 'text/javascript', true, true);
 
 	if($joomlaRecapchaType == 'invisible' && $joomlaRecapcha){
 		$invisibleRecaptcha = JPluginHelper::getPlugin('captcha', 'recaptcha_invisible');
