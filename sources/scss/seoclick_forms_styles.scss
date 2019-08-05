@@ -108,6 +108,9 @@
     -moz-flex-flow: row wrap;
     flex-flow: row wrap;
   }
+  &.line-form .field-wrap{
+    padding: 0 .5rem;
+  }
 }
 .g-recaptcha {
 

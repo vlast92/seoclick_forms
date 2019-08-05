@@ -101,6 +101,8 @@
     -webkit-flex-flow: row wrap;
     -moz-flex-flow: row wrap;
     flex-flow: row wrap; }
+  .seoclick-forms.line-form .field-wrap {
+    padding: 0 .5rem; }
 
 .g-recaptcha.invisible-recaptcha > div {
   margin: 0;

@@ -1,0 +1,5 @@
+.idea/
+node_modules/
+/overrides/js/popup.js
+/overrides/js/popup.js.map
+/overrides/js/popup.min.js
