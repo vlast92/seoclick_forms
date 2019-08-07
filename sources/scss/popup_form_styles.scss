@@ -62,9 +62,10 @@
     @include transform(scale(1) !important);
   }
   .close-button{
+    @include transition(.3s);
     box-sizing: border-box;
-    width: 1.875rem;
-    height: 1.875rem;
+    width: 2.125rem;
+    height: 2.125rem;
     text-align: center;
     padding: 0.5rem;
     line-height: 1em;

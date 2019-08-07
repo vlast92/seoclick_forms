@@ -85,9 +85,14 @@
     -o-transform: scale(1) !important;
     transform: scale(1) !important; }
   .seoclick-forms-popup-wrap .close-button {
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    -ms-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
     box-sizing: border-box;
-    width: 1.875rem;
-    height: 1.875rem;
+    width: 2.125rem;
+    height: 2.125rem;
     text-align: center;
     padding: 0.5rem;
     line-height: 1em;
