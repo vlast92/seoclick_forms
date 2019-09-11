@@ -1,6 +1,6 @@
 let renderRecaptcha = function () {
     jQuery(function ($) {
-        $.each($('.g-recaptcha.seoclick'), function (index, captcha) {
+        $.each($('.g-recaptcha.seoclick:not(.invisible-recaptcha)'), function (index, captcha) {
             var widgetId = grecaptcha.render(captcha);
 
             $(captcha).data('recaptcha-widget-id', widgetId);
@@ -8,13 +8,14 @@ let renderRecaptcha = function () {
     });
 };
 
-function submitSeoclickForm(token){
+function submitSeoclickForm(token) {
 
     var module_id = getCookie('seoclick_send_form_id');
 
     deleteCookie('seoclick_send_form_id');
     jQuery(`#${module_id} form`).submit();
 }
+
 // возвращает cookie с именем name, если есть, если нет, то undefined
 function getCookie(name) {
     let matches = document.cookie.match(new RegExp(
@@ -22,6 +23,7 @@ function getCookie(name) {
     ));
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
+
 function setCookie(name, value, options) {
     options = options || {};
 
@@ -50,6 +52,7 @@ function setCookie(name, value, options) {
 
     document.cookie = updatedCookie;
 }
+
 function deleteCookie(name) {
     setCookie(name, "", {
         expires: -1
@@ -80,19 +83,19 @@ jQuery(document).ready(function ($) {
         $(form).on("submit", validateForm);
     });
 
-    function createCustomFileInputs(){
+    function createCustomFileInputs() {
 
-        $.each($('.seoclick-forms .file-input'), function(index, input){
+        $.each($('.seoclick-forms .file-input'), function (index, input) {
 
             var customInput = $(input).siblings('.custom-fileinput'),
                 customFileList = $(input).siblings('.custom-filelist');
 
-            customInput.click(function(e){
+            customInput.click(function (e) {
 
                 e.preventDefault();
                 $(input).trigger('click');
             });
-            $(input).change(function(){
+            $(input).change(function () {
 
                 var filesList = input.files,
                     filesNames = '';
@@ -107,9 +110,9 @@ jQuery(document).ready(function ($) {
                         break;
                     default:
                         customFileList.text(customFileList.data('files') + ' ' + filesList.length);
-                        for(var i = 0; i < filesList.length; i++ ){
+                        for (var i = 0; i < filesList.length; i++) {
                             filesNames += filesList[i].name;
-                            if(i + 1 !== filesList.length) filesNames += ', '
+                            if (i + 1 !== filesList.length) filesNames += ', '
                         }
                         customFileList.attr('title', filesNames);
                 }
@@ -364,25 +367,37 @@ jQuery(document).ready(function ($) {
             formContainer = form.closest(".seoclick-forms"),
             messageBox = formContainer.find(".message-container"),
             files_data = form.find('.file-input')[0],
+            recaptcha = form.find('.g-recaptcha.seoclick'),
             recaptchaResponce;
 
-        if (Number(formParams.recaptchaEnabled)){
+        if (Number(formParams.recaptchaEnabled)) {
 
-            if (formParams.recaptchaType === 'invisible'){
-                formParams.captchaWidgetID = $(".invisible-recaptcha").data("recaptcha-widget-id");
+            if (formParams.recaptchaType === 'invisible') {
+                formParams.captchaWidgetID = recaptcha.data("recaptcha-widget-id");
+                if(typeof formParams.captchaWidgetID == "undefined")
+                {
+                    let widgetId = grecaptcha.render(recaptcha[0]);
+
+                    recaptcha.data('recaptcha-widget-id', widgetId);
+                    formParams.captchaWidgetID = widgetId;
+                }
+                if(recaptcha.children().length === 0){
+                    grecaptcha.reset(formParams.captchaWidgetID);
+                }
 
                 recaptchaResponce = grecaptcha.getResponse(formParams.captchaWidgetID);
-                if(recaptchaResponce=== ""){
-
+                if (recaptchaResponce === "") {
+                    messageBox.addClass("active");
+                    messageBox.html(mod_seoclick_forms_language_variables.recaptcha_check_text);
                     setCookie("seoclick_send_form_id", form.data("moduleid"));
                     grecaptcha.execute(formParams.captchaWidgetID);
 
                     return false;
                 }
-            }else{
+            } else {
                 formParams.captchaWidgetID = form.find(".g-recaptcha").data("recaptcha-widget-id");
                 recaptchaResponce = grecaptcha.getResponse(formParams.captchaWidgetID);
-                if(recaptchaResponce === ""){
+                if (recaptchaResponce === "") {
                     messageBox.addClass("active");
                     messageBox.html(mod_seoclick_forms_language_variables.captcha_validation_error);
 
@@ -390,12 +405,10 @@ jQuery(document).ready(function ($) {
                 }
             }
         }
-
         messageBox.addClass("active");
-
         if (files_data !== undefined) {
 
-            if($(files_data).next('.custom-fileinput').data('required') && files_data.files.length === 0){
+            if ($(files_data).next('.custom-fileinput').data('required') && files_data.files.length === 0) {
                 messageBox.html(mod_seoclick_forms_language_variables.no_files_error);
                 return 0;
             }
@@ -460,7 +473,14 @@ jQuery(document).ready(function ($) {
                 messageBox.html('AJAX error: ' + textStatus);
             },
             complete: function () {
-                if (Number(formParams.recaptchaEnabled)) grecaptcha.reset(formParams.captchaWidgetID);
+                if(Number(formParams.recaptchaEnabled)){
+                    if (formParams.recaptchaType === 'invisible')
+                    {
+                        $('.g-recaptcha.seoclick.invisible-recaptcha').html('');
+                    }else{
+                        grecaptcha.reset(formParams.captchaWidgetID);
+                    }
+                }
             }
         });
     }

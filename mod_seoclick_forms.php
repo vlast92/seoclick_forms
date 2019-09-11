@@ -17,8 +17,14 @@ if ($params->get("load_styles"))
 	ModSeoclickFormsHelper::addModuleAsset('/css/seoclick_forms_styles.min.css', 'css');
 }
 JHtml::_('jquery.framework');
+$debug = $params->get("debug_mode", 0);
+if($debug)
+{
+	ModSeoclickFormsHelper::addModuleAsset('/js/seoclick_forms.js', 'js');
+}else{
+	ModSeoclickFormsHelper::addModuleAsset('/js/seoclick_forms.min.js', 'js');
+}
 
-ModSeoclickFormsHelper::addModuleAsset('/js/seoclick_forms.min.js', 'js');
 
 
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
@@ -65,6 +71,7 @@ var mod_seoclick_forms_language_variables = {
     },
     'captcha_validation_error' : '".JText::_("MOD_SEOCLICK_FORM_CAPTCHA_ERROR")."',
     'no_files_error' : '".JText::_("MOD_SEOCLICK_FORM_NO_FILES_ERROR")."',
+    'recaptcha_check_text' : '".JText::_("MOD_SEOCLICK_FORM_RECAPTCHA_CHECK")."',
     'sending_text' : '".JText::_("MOD_SEOCLICK_FORMS_SENDING_TEXT")."'
 };
 ";

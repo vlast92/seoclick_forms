@@ -73,7 +73,8 @@
       -moz-transform: scale(0);
       -ms-transform: scale(0);
       -o-transform: scale(0);
-      transform: scale(0); }
+      transform: scale(0);
+      overflow: hidden; }
     .seoclick-forms-popup-wrap .modal-wrap > div > div:not(.modal-background) {
       width: 100%;
       height: calc(100% - 1.875rem);
@@ -98,8 +99,8 @@
     line-height: 1em;
     cursor: pointer;
     position: absolute;
-    top: -0.625rem;
-    right: -0.625rem;
+    top: 0;
+    right: 0;
     background: #e37c22;
     border-radius: 50%; }
   .seoclick-forms-popup-wrap .form-title {

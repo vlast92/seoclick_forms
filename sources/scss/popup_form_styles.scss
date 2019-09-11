@@ -51,6 +51,7 @@
       border-radius: 0.625rem;
       @include transition(.3s);
       @include transform(scale(0));
+      overflow: hidden;
     }
     & > div > div:not(.modal-background){
       width: 100%;
@@ -71,8 +72,8 @@
     line-height: 1em;
     cursor: pointer;
     position: absolute;
-    top: -0.625rem;
-    right: -0.625rem;
+    top: 0;
+    right: 0;
     background: #e37c22;
     border-radius: 50%;
   }

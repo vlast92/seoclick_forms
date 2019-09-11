@@ -59,35 +59,10 @@ $form_id = "seoclick_form_". $module->id . "_" . rand(1, 10000);
 			<?php endforeach; ?>
         </div>
 	    <?php
-	    if($joomlaRecapchaEnabled){
-
-		    if (empty($sitekey) || empty($secretkey))
-		    {
-			    echo JText::_("MOD_SEOCLICK_FORMS_RECAPTCHA_KEY_ERROR");
-		    }
-
-		    switch ($joomlaRecapchaType){
-			    case 'invisible':
-				    $script = "
-                                jQuery(function($){
-                                     var invisibleRecaptcha = '<div class=\"g-recaptcha seoclick invisible-recaptcha\" data-badge=\"$joomlaRecapchaPosition\" data-sitekey=\"$sitekey\" data-callback=\"submitSeoclickForm\" data-size=\"invisible\"></div>';
-                                     
-				                     if(!$('.invisible-recaptcha').length) $('body').append(invisibleRecaptcha);
-                                });
-				            ";
-				    $document->addScriptDeclaration($script);
-
-				    break;
-			    default:
-				    ?>
-                    <div class="g-recaptcha seoclick"
-                         data-sitekey="<?=$sitekey?>"
-                         data-theme="light"
-                         data-size="normal">
-                    </div>
-			    <?php
-		    }
-	    }?>
+	    if ($joomlaRecapchaEnabled)
+	    {
+		    require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'field_recaptcha');
+	    } ?>
         <input type="hidden" name="module-name" value="<?= $module->title ?>"/>
         <div class="field-wrap submit-button-wrap"><input type="submit" class="<?=$submitCss?>" value="<?= $submitText; ?>"/></div>
     </form>

@@ -2,7 +2,7 @@
 
 var renderRecaptcha = function renderRecaptcha() {
     jQuery(function ($) {
-        $.each($('.g-recaptcha.seoclick'), function (index, captcha) {
+        $.each($('.g-recaptcha.seoclick:not(.invisible-recaptcha)'), function (index, captcha) {
             var widgetId = grecaptcha.render(captcha);
 
             $(captcha).data('recaptcha-widget-id', widgetId);
@@ -17,11 +17,13 @@ function submitSeoclickForm(token) {
     deleteCookie('seoclick_send_form_id');
     jQuery('#' + module_id + ' form').submit();
 }
+
 // возвращает cookie с именем name, если есть, если нет, то undefined
 function getCookie(name) {
     var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
+
 function setCookie(name, value, options) {
     options = options || {};
 
@@ -50,6 +52,7 @@ function setCookie(name, value, options) {
 
     document.cookie = updatedCookie;
 }
+
 function deleteCookie(name) {
     setCookie(name, "", {
         expires: -1
@@ -365,16 +368,27 @@ jQuery(document).ready(function ($) {
             formContainer = form.closest(".seoclick-forms"),
             messageBox = formContainer.find(".message-container"),
             files_data = form.find('.file-input')[0],
+            recaptcha = form.find('.g-recaptcha.seoclick'),
             recaptchaResponce = void 0;
 
         if (Number(formParams.recaptchaEnabled)) {
 
             if (formParams.recaptchaType === 'invisible') {
-                formParams.captchaWidgetID = $(".invisible-recaptcha").data("recaptcha-widget-id");
+                formParams.captchaWidgetID = recaptcha.data("recaptcha-widget-id");
+                if (typeof formParams.captchaWidgetID == "undefined") {
+                    var widgetId = grecaptcha.render(recaptcha[0]);
+
+                    recaptcha.data('recaptcha-widget-id', widgetId);
+                    formParams.captchaWidgetID = widgetId;
+                }
+                if (recaptcha.children().length === 0) {
+                    grecaptcha.reset(formParams.captchaWidgetID);
+                }
 
                 recaptchaResponce = grecaptcha.getResponse(formParams.captchaWidgetID);
                 if (recaptchaResponce === "") {
-
+                    messageBox.addClass("active");
+                    messageBox.html(mod_seoclick_forms_language_variables.recaptcha_check_text);
                     setCookie("seoclick_send_form_id", form.data("moduleid"));
                     grecaptcha.execute(formParams.captchaWidgetID);
 
@@ -391,9 +405,7 @@ jQuery(document).ready(function ($) {
                 }
             }
         }
-
         messageBox.addClass("active");
-
         if (files_data !== undefined) {
 
             if ($(files_data).next('.custom-fileinput').data('required') && files_data.files.length === 0) {
@@ -461,7 +473,13 @@ jQuery(document).ready(function ($) {
                 messageBox.html('AJAX error: ' + textStatus);
             },
             complete: function complete() {
-                if (Number(formParams.recaptchaEnabled)) grecaptcha.reset(formParams.captchaWidgetID);
+                if (Number(formParams.recaptchaEnabled)) {
+                    if (formParams.recaptchaType === 'invisible') {
+                        $('.g-recaptcha.seoclick.invisible-recaptcha').html('');
+                    } else {
+                        grecaptcha.reset(formParams.captchaWidgetID);
+                    }
+                }
             }
         });
     }
