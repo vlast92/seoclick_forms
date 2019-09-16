@@ -232,7 +232,7 @@ class ModSeoclickFormsHelper
 				case "email":
 					$pattern = self::$emailPattern;
 					break;
-				case "line_text":
+				case "line_text" or "hidden" or "data" or "select":
 					$data = self::clearData($data);
 					return $data;
 				default:

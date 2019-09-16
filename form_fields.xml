@@ -43,14 +43,14 @@
                description="MOD_SEOCLICK_FORMS_REQUIRED_DESCRIPTION"
                value="1"
                default="0"
-               showon="type!:line_text[AND]type!:hidden"/>
+               showon="type!:line_text[AND]type!:hidden[AND]type!:select"/>
         <field name="validation"
                type="checkbox"
                label="MOD_SEOCLICK_FORMS_VALIDATION_LABEL"
                description="MOD_SEOCLICK_FORMS_VALIDATION_DESCRIPTION"
                value="1"
                default="0"
-               showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date"/>
+               showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date[AND]type!:select"/>
         <field
                 name="default_validation"
                 type="radio"
@@ -81,7 +81,7 @@
                 label="MOD_SEOCLICK_FORMS_PLACEHOLDER_LABEL"
                 description="MOD_SEOCLICK_FORMS_PLACEHOLDER_DESCRIPTION"
                 size="50"
-                showon="type!:file[AND]type!:line_text[AND]type!:hidden"/>
+                showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:select"/>
         <field name="maxlength"
                type="number"
                default="100"
@@ -91,7 +91,7 @@
                max="1000"
                step="1"
                size="4"
-               showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date"/>
+               showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date[AND]type!:select[AND]type!:date"/>
         <field name="multiple"
                type="checkbox"
                label="MOD_SEOCLICK_FORMS_MULTIPLE_LABEL"
