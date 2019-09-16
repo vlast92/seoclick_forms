@@ -18,8 +18,6 @@ if($debug)
 	ModSeoclickFormsHelper::addModuleAsset('/js/popup.min.js', 'js');
 }
 
-
-$key = 0;
 $form_id = "seoclick_form_". $module->id . "_" . rand(1, 10000);
 ?>
     <div class="seoclickFormsShowpopUpForm <?=$showButtonCss?>" data-form="<?= $form_id ?>"><?= $showButtonText ?></div>
@@ -33,8 +31,7 @@ $form_id = "seoclick_form_". $module->id . "_" . rand(1, 10000);
 		            <?php require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'form_text');?>
 	            <?php endif; ?>
                 <div class="message-container"></div>
-				<?php foreach ($formFields as $formField): ?>
-					<?php $name = "form_fields" . $key++; ?>
+				<?php foreach ($formFields as $name => $formField): ?>
                     <div class="field-wrap  <?= $formField['css'] ?>">
 						<?php if ($formField['label']): ?>
                         <label>

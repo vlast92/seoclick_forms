@@ -10,7 +10,6 @@
 /*TODO Сделать на bootstrap*/
 defined('_JEXEC') or die;
 
-$key = 0;
 $form_id = "seoclick_form_". $module->id . "_" . rand(1, 10000);
 ?>
 <div id="<?=$form_id?>" class="form-wrap seoclick-forms line-form <?= $moduleclass_sfx; ?>">
@@ -23,8 +22,7 @@ $form_id = "seoclick_form_". $module->id . "_" . rand(1, 10000);
 	    <?php endif; ?>
         <div class="message-container"></div>
         <div class="g-grid">
-			<?php foreach ($formFields as $formField): ?>
-				<?php $name = "form_fields".$key++;?>
+			<?php foreach ($formFields as $name => $formField): ?>
                 <div class="field-wrap <?= $formField['css'] ?>">
 					<?php if ($formField['label']): ?>
                     <label>
