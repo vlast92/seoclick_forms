@@ -219,6 +219,11 @@ class ModSeoclickFormsHelper
 	 */
 	private static function checkData($data, $type, $maxLength, $pattern)
 	{
+		if($type == "line_text" or $type == "hidden" or $type == "data" or $type == "select")
+		{
+			$data = self::clearData($data);
+			return $data;
+		}
 		if (empty($pattern))
 		{
 			switch ($type)
@@ -232,9 +237,6 @@ class ModSeoclickFormsHelper
 				case "email":
 					$pattern = self::$emailPattern;
 					break;
-				case "line_text" or "hidden" or "data" or "select":
-					$data = self::clearData($data);
-					return $data;
 				default:
 					$pattern = false;
 			}
