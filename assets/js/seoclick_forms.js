@@ -463,6 +463,9 @@ jQuery(document).ready(function ($) {
 
             success: function success(respond) {
 
+                if (Boolean(formParams.metricsCode)) {
+                    eval(formParams.metricsCode);
+                }
                 if (respond.message !== null) {
                     messageBox.html(respond.message);
                 } else {

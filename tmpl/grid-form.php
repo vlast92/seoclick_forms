@@ -66,10 +66,7 @@ $form_id = "seoclick_form_". $module->id . "_" . rand(1, 10000);
     </form>
 </div>
 <?php
-$script = "var $form_id = {
-    recaptchaEnabled: '$joomlaRecapchaEnabled',
-    recaptchaType: '$joomlaRecapchaType'
-};";
+require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'form_params');
 
 $document->addScriptDeclaration($script);
 if ($phoneMask)
