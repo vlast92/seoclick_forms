@@ -282,7 +282,7 @@ class ModSeoclickFormsHelper
 			$allowedFilesTypes = explode(',',$formField['filetypes']);
 
 			foreach ($allowedFilesTypes as $allowedFileType){
-				$allowedFileType = str_replace(array(".","\t"), '', $allowedFileType);
+				$allowedFileType = trim(str_replace(array(".","\t"), '', $allowedFileType));
 				$allowedFilesMimes[$allowedFileType] = $filesMimes[$allowedFileType];
 			}
 
