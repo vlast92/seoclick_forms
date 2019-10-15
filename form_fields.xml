@@ -82,6 +82,11 @@
                 description="MOD_SEOCLICK_FORMS_PLACEHOLDER_DESCRIPTION"
                 size="50"
                 showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:select"/>
+        <field  name="def_value"
+                type="text"
+                label="MOD_SEOCLICK_FORMS_DEFAULT_VALUE_LABEL"
+                showon="type:hidden"
+                />
         <field name="maxlength"
                type="number"
                default="100"

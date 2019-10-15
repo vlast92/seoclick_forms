@@ -36,6 +36,9 @@ defined('_JEXEC') or die;
 	<?php else: ?>
 		type="text"
 	<?php endif; ?>
+    <?php if($formField['def_value']): ?>
+        value="<?=$formField['def_value']?>"
+    <?php endif ?>
 	<?php if ($formField['placeholder']): ?>
 		placeholder="<?= $formField['placeholder']; ?>"
 		title="<?= $formField['placeholder']; ?>"
