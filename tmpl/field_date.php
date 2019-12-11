@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
 				pattern="<?= $formField['pattern'] ?>"
 			<?php endif; ?>
 			<?php if ($formField['tooltip']): ?>
-				data-tooltip="<?= $formField['tooltip'] ?>"
+				data-tooltip="<?= htmlspecialchars($formField['tooltip']) ?>"
 			<?php endif; ?>
 		<?php endif; ?>
 	<?php endif; ?>
@@ -30,7 +30,7 @@ defined('_JEXEC') or die;
 	type="text"
 	onfocus="this.type='date'"
 	<?php if ($formField['placeholder']): ?>
-		placeholder="<?= $formField['placeholder']; ?>"
-		title="<?= $formField['placeholder']; ?>"
+		placeholder="<?= htmlspecialchars($formField['placeholder']); ?>"
+		title="<?= htmlspecialchars($formField['placeholder']); ?>"
 	<?php endif; ?>
 />

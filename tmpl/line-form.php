@@ -62,7 +62,7 @@ $form_id = "seoclick_form_". $module->id . "_" . rand(1, 10000);
 	    {
 		    require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'field_recaptcha');
 	    } ?>
-        <input type="hidden" name="module-name" value="<?= $module->title ?>"/>
+        <input type="hidden" name="module-name" value="<?= htmlspecialchars($module->title) ?>"/>
     </form>
 </div>
 <?php
