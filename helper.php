@@ -186,13 +186,8 @@ class ModSeoclickFormsHelper
 		foreach ($formData as $name => $formField)
 		{
 			$field_params = $formFields[$name];
+			if(!$field_params) continue;
 
-			if ($name == "g-recaptcha-response" || $name == "module-name" || $name == "option" || $name == "module" || $name == "format" || empty($formField) && $field_params['type'] != 'line_text')
-			{
-				continue;
-			}
-
-			if(!$field_params) return false;
 			$formField = self::checkData($formField, $field_params['type'], $field_params['maxlength'], $field_params['pattern']);
 			if (!$formField) return false;
 
@@ -206,7 +201,6 @@ class ModSeoclickFormsHelper
 			{
 				$messageContent .= "\n<p>" . $mailLabel . ":&nbsp;" . $formField . "</p>";
 			}
-
 		}
 
 		return $messageContent;

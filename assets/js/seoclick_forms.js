@@ -166,7 +166,7 @@ jQuery(document).ready(function ($) {
 
         switch (command) {
             case 'create':
-                input.after("<div class='invalid-tooltip'><div>" + input.data("tooltip") + "</div></div>");
+                input.after("<div class='seoclick-tooltip'><div>" + input.data("tooltip") + "</div></div>");
                 input.next().hide();
                 break;
             case 'show':
