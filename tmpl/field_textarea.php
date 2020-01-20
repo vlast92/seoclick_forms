@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 ?>
 <textarea
 	maxlength="<?= $formField['maxlength']; ?>"
+    rows="<?= $formField['textarea_rows']?>"
 								<?php if ($formField['validation']): ?>
 									class="validate"
 									data-validate="<?= $formField['type']; ?>"

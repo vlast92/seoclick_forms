@@ -23,6 +23,13 @@
                label="MOD_SEOCLICK_FORMS_SELECT_OPTIONS_LABEL"
                description="MOD_SEOCLICK_FORMS_SELECT_OPTIONS_DESCRIPTION"
                showon="type:select"/>
+        <field name="textarea_rows"
+               type="number"
+               min="1"
+               default="4"
+               label="MOD_SEOCLICK_FORMS_TEXTAREA_ROWS_LABEL"
+               description="MOD_SEOCLICK_FORMS_TEXTAREA_ROWS_DESCRIPTION"
+               showon="type:textarea"/>
         <field
                 name="label"
                 type="text"
