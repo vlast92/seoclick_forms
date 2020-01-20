@@ -186,7 +186,7 @@ class ModSeoclickFormsHelper
 		foreach ($formData as $name => $formField)
 		{
 			$field_params = $formFields[$name];
-			if(!$field_params) continue;
+			if(!$field_params || (!$field_params['required'] && empty($formField))) continue;
 
 			$formField = self::checkData($formField, $field_params['type'], $field_params['maxlength'], $field_params['pattern']);
 			if (!$formField) return false;
