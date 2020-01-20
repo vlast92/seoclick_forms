@@ -33,6 +33,10 @@ defined('_JEXEC') or die;
 		type="date"
 	<?php elseif ($formField['type'] == "hidden"): ?>
 		type="hidden"
+    <?php elseif ($formField['type'] == "number"): ?>
+		type="number"
+        min="<?=$formField['min'];?>"
+        max="<?=$formField['max'];?>"
 	<?php else: ?>
 		type="text"
 	<?php endif; ?>

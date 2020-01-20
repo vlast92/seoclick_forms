@@ -7,6 +7,7 @@
                multiple="false"
                default="text">
             <option value="text">MOD_SEOCLICK_FORMS_TEXTFIELD_TEXT_LABEL</option>
+            <option value="number">MOD_SEOCLICK_FORMS_TEXTFIELD_NUMBER_LABEL</option>
             <option value="textarea">MOD_SEOCLICK_FORMS_TEXTFIELD_TEXTAREA_LABEL</option>
             <option value="site">MOD_SEOCLICK_FORMS_TEXTFIELD_SITE_LABEL</option>
             <option value="phone">MOD_SEOCLICK_FORMS_TEXTFIELD_PHONE_LABEL</option>
@@ -17,6 +18,16 @@
             <option value="hidden">MOD_SEOCLICK_FORMS_TEXTFIELD_HIDDEN_LABEL</option>
             <option value="file">MOD_SEOCLICK_FORMS_TEXTFIELD_FILE_LABLE</option>
         </field>
+        <field name="min"
+                type="number"
+                default="0"
+                label="MOD_SEOCLICK_FORMS_TEXTFIELD_NUMBER_MIN_LABEL"
+                showon="type:number"/>
+        <field name="max"
+                type="number"
+                default="100"
+                label="MOD_SEOCLICK_FORMS_TEXTFIELD_NUMBER_MAX_LABEL"
+                showon="type:number"/>
         <field name="select_options"
                type="textarea"
                rows="5"
@@ -57,7 +68,7 @@
                description="MOD_SEOCLICK_FORMS_VALIDATION_DESCRIPTION"
                value="1"
                default="0"
-               showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date[AND]type!:select"/>
+               showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date[AND]type!:select[AND]type!:number"/>
         <field
                 name="default_validation"
                 type="radio"
@@ -103,7 +114,7 @@
                max="1000"
                step="1"
                size="4"
-               showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date[AND]type!:select[AND]type!:date"/>
+               showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date[AND]type!:select[AND]type!:date[AND]type!:number"/>
         <field name="multiple"
                type="checkbox"
                label="MOD_SEOCLICK_FORMS_MULTIPLE_LABEL"
