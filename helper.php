@@ -13,7 +13,7 @@ class ModSeoclickFormsHelper
 	static private $formData, $moduleParams, $email,
 		$sitePattern = '/^[\w \.]+[\.]{1}[\D]{2,4}$/',
 		$phonePattern = '/^[\+ \- \( \d \) \s]{7,}/',
-		$emailPattern = '/^[\w \.]+[@]{1}[\w]+[\.]{1}[\D]{2,4}$/';
+		$emailPattern = '/^[\w А-Яа-я \. \-]+[@]{1}[\w]+[\.]{1}[\D]{2,4}$/';
 
 	/*
 	 * Функция принимает данные через AJAX
