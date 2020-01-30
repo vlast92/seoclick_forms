@@ -40,6 +40,8 @@
     flex-flow: row wrap;
     color: #000;
     text-align: left; }
+    .seoclick-forms-popup-wrap .modal-wrap:not(.active) {
+      visibility: hidden; }
     .seoclick-forms-popup-wrap .modal-wrap form {
       display: -webkit-box;
       display: -moz-box;
