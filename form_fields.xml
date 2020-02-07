@@ -17,6 +17,7 @@
             <option value="line_text">MOD_SEOCLICK_FORMS_TEXTFIELD_LINETEXT_LABEL</option>
             <option value="hidden">MOD_SEOCLICK_FORMS_TEXTFIELD_HIDDEN_LABEL</option>
             <option value="file">MOD_SEOCLICK_FORMS_TEXTFIELD_FILE_LABLE</option>
+            <option value="metrics_code">MOD_SEOCLICK_FORMS_METRICS_CODE</option>
         </field>
         <field name="min"
                 type="number"
@@ -47,28 +48,28 @@
                 label="MOD_SEOCLICK_FORMS_FIELDSLABELS_LABEL"
                 description="MOD_SEOCLICK_FORMS_FIELDSLABELSR_DESCRIPTION"
                 size="50"
-                showon="type!:hidden"/>
+                showon="type!:hidden[AND]type!:metrics_code"/>
         <field
                 name="mail_label"
                 type="text"
                 label="MOD_SEOCLICK_FORMS_MAIL_FILDSLABELS_LABEL"
                 description="MOD_SEOCLICK_FORMS_MAIL_FILDSLABELS_DESCRIPTION"
                 size="50"
-                showon="type!:file"/>
+                showon="type!:file[AND]type!:metrics_code"/>
         <field name="required"
                type="checkbox"
                label="MOD_SEOCLICK_FORMS_REQUIRED_LABEL"
                description="MOD_SEOCLICK_FORMS_REQUIRED_DESCRIPTION"
                value="1"
                default="0"
-               showon="type!:line_text[AND]type!:hidden[AND]type!:select"/>
+               showon="type!:line_text[AND]type!:hidden[AND]type!:select[AND]type!:metrics_code"/>
         <field name="validation"
                type="checkbox"
                label="MOD_SEOCLICK_FORMS_VALIDATION_LABEL"
                description="MOD_SEOCLICK_FORMS_VALIDATION_DESCRIPTION"
                value="1"
                default="0"
-               showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date[AND]type!:select[AND]type!:number"/>
+               showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date[AND]type!:select[AND]type!:number[AND]type!:metrics_code"/>
         <field
                 name="default_validation"
                 type="radio"
@@ -99,11 +100,11 @@
                 label="MOD_SEOCLICK_FORMS_PLACEHOLDER_LABEL"
                 description="MOD_SEOCLICK_FORMS_PLACEHOLDER_DESCRIPTION"
                 size="50"
-                showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:select"/>
+                showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:select[AND]type!:metrics_code"/>
         <field  name="def_value"
                 type="text"
                 label="MOD_SEOCLICK_FORMS_DEFAULT_VALUE_LABEL"
-                showon="type:hidden"
+                showon="type:hidden[OR]type:metrics_code"
                 />
         <field name="maxlength"
                type="number"
@@ -114,7 +115,7 @@
                max="1000"
                step="1"
                size="4"
-               showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date[AND]type!:select[AND]type!:date[AND]type!:number"/>
+               showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date[AND]type!:select[AND]type!:date[AND]type!:number[AND]type!:metrics_code"/>
         <field name="multiple"
                type="checkbox"
                label="MOD_SEOCLICK_FORMS_MULTIPLE_LABEL"

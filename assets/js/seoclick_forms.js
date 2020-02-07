@@ -455,6 +455,15 @@ jQuery(document).ready(function ($) {
 
         messageBox.html(mod_seoclick_forms_language_variables.sending_text);
 
+        var metricsCode = false;
+
+        if (formData.has('metrics_code')) {
+            metricsCode = formData.get('metrics_code');
+            formData.delete('metrics_code');
+        } else if (Boolean(formParams.metricsCode)) {
+            metricsCode = formParams.metricsCode;
+        }
+
         $.ajax({
             type: 'POST',
             data: formData,
@@ -463,8 +472,8 @@ jQuery(document).ready(function ($) {
 
             success: function success(respond) {
 
-                if (Boolean(formParams.metricsCode)) {
-                    eval(formParams.metricsCode);
+                if (metricsCode) {
+                    eval(metricsCode);
                 }
                 if (respond.message !== null) {
                     messageBox.html(respond.message);

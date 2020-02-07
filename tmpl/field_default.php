@@ -23,7 +23,11 @@ defined('_JEXEC') or die;
 			<?php endif; ?>
 		<?php endif; ?>
 	<?php endif; ?>
-	name="<?= $name; ?>"
+    <?php if($formField['type'] == "metrics_code"): ?>
+        name="metrics_code"
+    <?php else: ?>
+        name="<?= $name; ?>"
+    <?php endif; ?>
 	<?php if ($formField['required']): ?>
 		required=""
 	<?php endif; ?>
@@ -31,7 +35,7 @@ defined('_JEXEC') or die;
 		type="email"
 	<?php elseif ($formField['type'] == "date"): ?>
 		type="date"
-	<?php elseif ($formField['type'] == "hidden"): ?>
+	<?php elseif ($formField['type'] == "hidden" || $formField['type'] == "metrics_code"): ?>
 		type="hidden"
     <?php elseif ($formField['type'] == "number"): ?>
 		type="number"
