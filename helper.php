@@ -193,7 +193,7 @@ class ModSeoclickFormsHelper
 
 			$mailLabel = $field_params['mail_label'];
 
-			if ($field_params['type'] == 'line_text')
+			if ($field_params['type'] == 'line_text' || $field_params['type'] == 'checkbox')
 			{
 				$messageContent .= "\n<p>" . $mailLabel . "</p>";
 			}
@@ -213,7 +213,7 @@ class ModSeoclickFormsHelper
 	 */
 	private static function checkData($data, $type, $maxLength, $pattern)
 	{
-		if($type == "line_text" or $type == "hidden" or $type == "data" or $type == "select")
+		if($type == "line_text" or $type == "hidden" or $type == "data" or $type == "select" or $type == "checkbox")
 		{
 			$data = self::clearData($data);
 			return $data;

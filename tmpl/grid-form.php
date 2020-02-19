@@ -24,7 +24,7 @@ $form_id = "seoclick_form_". $module->id . "_" . rand(1, 10000);
         <div class="g-grid">
 			<?php foreach ($formFields as $name => $formField): ?>
                 <div class="field-wrap <?= $formField['css'] ?>">
-					<?php if ($formField['label']): ?>
+					<?php if ($formField['label'] and $formField['type'] !== 'checkbox' and $formField['type'] !== 'line_text'): ?>
                     <label>
                         <span class="fieldName">
                             <?= $formField['label']; ?>
@@ -34,6 +34,10 @@ $form_id = "seoclick_form_". $module->id . "_" . rand(1, 10000);
 	                    <?php switch ($formField['type'])
 	                    {
 		                    case "line_text":
+			                    require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'field_line');
+			                    break;
+		                    case "checkbox":
+			                    require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'field_checkbox');
 			                    break;
 		                    case "textarea":
 			                    require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'field_textarea');
@@ -50,7 +54,7 @@ $form_id = "seoclick_form_". $module->id . "_" . rand(1, 10000);
 		                    default:
 			                    require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'field_default');
 	                    } ?>
-						<?php if ($formField['label']): ?>
+						<?php if ($formField['label'] and $formField['type'] !== 'checkbox' and $formField['type'] !== 'line_text'): ?>
                     </label>
 				<?php endif; ?>
                 </div>
