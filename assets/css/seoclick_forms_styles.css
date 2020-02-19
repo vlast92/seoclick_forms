@@ -38,7 +38,7 @@
     margin-bottom: 1rem; }
     .seoclick-forms .field-wrap label {
       margin-bottom: 0; }
-    .seoclick-forms .field-wrap:not(.submit-button-wrap) input, .seoclick-forms .field-wrap textarea {
+    .seoclick-forms .field-wrap:not(.submit-button-wrap) input, .seoclick-forms .field-wrap textarea, .seoclick-forms .field-wrap select {
       width: 100%;
       color: #7d7d7d;
       background-color: #fff;
@@ -46,12 +46,12 @@
       min-height: 2.5rem;
       max-width: 19rem;
       line-height: normal; }
-      .seoclick-forms .field-wrap:not(.submit-button-wrap) input:focus, .seoclick-forms .field-wrap textarea:focus {
+      .seoclick-forms .field-wrap:not(.submit-button-wrap) input:focus, .seoclick-forms .field-wrap textarea:focus, .seoclick-forms .field-wrap select:focus {
         border-color: transparent;
         -webkit-box-shadow: 0 0 0.5rem 0 #48a9ff;
         -moz-box-shadow: 0 0 0.5rem 0 #48a9ff;
         box-shadow: 0 0 0.5rem 0 #48a9ff; }
-      .seoclick-forms .field-wrap:not(.submit-button-wrap) input.invalid, .seoclick-forms .field-wrap textarea.invalid {
+      .seoclick-forms .field-wrap:not(.submit-button-wrap) input.invalid, .seoclick-forms .field-wrap textarea.invalid, .seoclick-forms .field-wrap select.invalid {
         border-color: red;
         -webkit-box-shadow: 0 0 0.5rem 0 red;
         -moz-box-shadow: 0 0 0.5rem 0 red;

@@ -100,7 +100,7 @@
                 label="MOD_SEOCLICK_FORMS_PLACEHOLDER_LABEL"
                 description="MOD_SEOCLICK_FORMS_PLACEHOLDER_DESCRIPTION"
                 size="50"
-                showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:select[AND]type!:metrics_code"/>
+                showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:metrics_code"/>
         <field  name="def_value"
                 type="text"
                 label="MOD_SEOCLICK_FORMS_DEFAULT_VALUE_LABEL"
