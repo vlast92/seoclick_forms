@@ -24,4 +24,4 @@ foreach ($selectOptions as $option)
 	$options[] = JHTML::_('select.option', $option, $option);
 }
 
-echo JHTML::_('select.genericlist', $options, $name, array('class' => 'advancedSelect'), 'value', 'text', 1);
+echo JHTML::_('select.genericlist', $options, $name, array('class' => 'advancedSelect'), 'value', 'text', 1, $name . rand(1, 1000));
