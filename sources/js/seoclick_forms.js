@@ -62,9 +62,9 @@ function deleteCookie(name) {
 jQuery(document).ready(function ($) {
 
     let inputs,
-        sitePattern = "^[\\w \\.]+[\\.]{1}[\\D]{2,4}$",
+        sitePattern = "^[\\w \\W]+[\\.]{1}[\\D]{2,4}$",
         phonePattern = "^[\\+ \\- \\( \\d \\) \\s]{7,}",
-        emailPattern = "^[\\w А-Яа-я \\. \\-]+[@]{1}[\\w]+[\\.]{1}[\\D]{2,4}$",
+        emailPattern = "^[\\w \\W]+[@]{1}[\\w \\W]+[\\.]{1}[\\D]{2,4}$",
         forms = $(".seoclick-forms .form-validate"),
         default_site_tooltip_text = mod_seoclick_forms_language_variables.default_site_tooltip_text,
         default_email_tooltip_text = mod_seoclick_forms_language_variables.default_email_tooltip_text,
