@@ -69,7 +69,7 @@
                description="MOD_SEOCLICK_FORMS_REQUIRED_DESCRIPTION"
                value="1"
                default="0"
-               showon="type!:line_text[AND]type!:hidden[AND]type!:select[AND]type!:metrics_code[AND]type!:checkbox"/>
+               showon="type!:line_text[AND]type!:hidden[AND]type!:select[AND]type!:metrics_code"/>
         <field name="validation"
                type="checkbox"
                label="MOD_SEOCLICK_FORMS_VALIDATION_LABEL"
