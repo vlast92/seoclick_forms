@@ -14,6 +14,9 @@ defined('_JEXEC') or die;
     <input type="checkbox"
            class="checkbox"
            name="<?= $name; ?>"
+        <?php if ($formField['required']): ?>
+            required=""
+		<?php endif; ?>
            <?php if($formField['checkbox_selected']):?>checked<?php endif;?> />
     <?=$formField['label']?>
 </label>
