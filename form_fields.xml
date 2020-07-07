@@ -15,6 +15,7 @@
             <option value="date">MOD_SEOCLICK_FORMS_TEXTFIELD_DATE_LABEL</option>
             <option value="select">MOD_SEOCLICK_FORMS_TEXTFIELD_SELECT_LABEL</option>
             <option value="checkbox">MOD_SEOCLICK_FORMS_TEXTFIELD_CHECKBOX_LABEL</option>
+            <option value="radio">MOD_SEOCLICK_FORMS_TEXTFIELD_RADIO_LABEL</option>
             <option value="line_text">MOD_SEOCLICK_FORMS_TEXTFIELD_LINETEXT_LABEL</option>
             <option value="hidden">MOD_SEOCLICK_FORMS_TEXTFIELD_HIDDEN_LABEL</option>
             <option value="file">MOD_SEOCLICK_FORMS_TEXTFIELD_FILE_LABLE</option>
@@ -42,6 +43,12 @@
                label="MOD_SEOCLICK_FORMS_SELECT_OPTIONS_LABEL"
                description="MOD_SEOCLICK_FORMS_SELECT_OPTIONS_DESCRIPTION"
                showon="type:select"/>
+        <field name="radio_buttons"
+               type="textarea"
+               rows="5"
+               label="MOD_SEOCLICK_FORMS_RADIO_LIST_LABEL"
+               description="MOD_SEOCLICK_FORMS_RADIO_LIST_DESCRIPTION"
+               showon="type:radio"/>
         <field name="textarea_rows"
                type="number"
                min="1"
@@ -76,7 +83,7 @@
                description="MOD_SEOCLICK_FORMS_VALIDATION_DESCRIPTION"
                value="1"
                default="0"
-               showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date[AND]type!:select[AND]type!:number[AND]type!:metrics_code[AND]type!:checkbox"/>
+               showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date[AND]type!:select[AND]type!:number[AND]type!:metrics_code[AND]type!:checkbox[AND]type!:radio"/>
         <field
                 name="default_validation"
                 type="radio"
@@ -107,7 +114,7 @@
                 label="MOD_SEOCLICK_FORMS_PLACEHOLDER_LABEL"
                 description="MOD_SEOCLICK_FORMS_PLACEHOLDER_DESCRIPTION"
                 size="50"
-                showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:metrics_code[AND]type!:checkbox"/>
+                showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:metrics_code[AND]type!:checkbox[AND]type!:radio"/>
         <field  name="def_value"
                 type="text"
                 label="MOD_SEOCLICK_FORMS_DEFAULT_VALUE_LABEL"
@@ -122,7 +129,7 @@
                max="1000"
                step="1"
                size="4"
-               showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date[AND]type!:select[AND]type!:date[AND]type!:number[AND]type!:metrics_code[AND]type!:checkbox"/>
+               showon="type!:file[AND]type!:line_text[AND]type!:hidden[AND]type!:date[AND]type!:select[AND]type!:date[AND]type!:number[AND]type!:metrics_code[AND]type!:checkbox[AND]type!:radio"/>
         <field name="multiple"
                type="checkbox"
                label="MOD_SEOCLICK_FORMS_MULTIPLE_LABEL"

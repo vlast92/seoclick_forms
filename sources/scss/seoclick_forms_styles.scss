@@ -73,6 +73,11 @@
       height: auto;
       padding: .625rem;
     }
+    &:not(.submit-button-wrap) input[type="radio"]{
+      width: auto;
+      max-width: initial;
+      min-height: initial;
+    }
     .seoclick-tooltip{
       $color: #eaeef3;
 

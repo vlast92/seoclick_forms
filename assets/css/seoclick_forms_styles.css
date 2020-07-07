@@ -68,6 +68,10 @@
       width: 100%;
       height: auto;
       padding: .625rem; }
+    .seoclick-forms .field-wrap:not(.submit-button-wrap) input[type="radio"] {
+      width: auto;
+      max-width: initial;
+      min-height: initial; }
     .seoclick-forms .field-wrap .seoclick-tooltip {
       opacity: 0;
       position: absolute;

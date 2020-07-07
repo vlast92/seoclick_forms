@@ -55,6 +55,9 @@ $form_id = "seoclick_form_". $module->id . "_" . rand(1, 10000);
 								    case "select":
 									    require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'field_select');
 									    break;
+								    case "radio":
+									    require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'field_radio');
+									    break;
 								    case "file":
 									    require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'field_file');
 									    break;
