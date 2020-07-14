@@ -36,11 +36,9 @@
     &:not(.active){
       visibility: hidden;
     }
-    form{
+    & > *:not(.close-background){
       @include displayFlex;
       align-items: center;
-    }
-    & > *:not(.close-background){
       z-index: 1;
       box-sizing: border-box;
       position: relative;
@@ -55,11 +53,6 @@
       @include transition(.3s);
       @include transform(scale(0));
       overflow: hidden;
-    }
-    & > div > div:not(.modal-background){
-      width: 100%;
-      height: calc(100% - 1.875rem);
-      overflow-y: auto;
     }
   }
   .active{
