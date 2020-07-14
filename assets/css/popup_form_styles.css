@@ -42,7 +42,7 @@
     text-align: left; }
     .seoclick-forms-popup-wrap .modal-wrap:not(.active) {
       visibility: hidden; }
-    .seoclick-forms-popup-wrap .modal-wrap form {
+    .seoclick-forms-popup-wrap .modal-wrap > *:not(.close-background) {
       display: -webkit-box;
       display: -moz-box;
       display: box;
@@ -53,8 +53,7 @@
       -webkit-flex-flow: row wrap;
       -moz-flex-flow: row wrap;
       flex-flow: row wrap;
-      align-items: center; }
-    .seoclick-forms-popup-wrap .modal-wrap > *:not(.close-background) {
+      align-items: center;
       z-index: 1;
       box-sizing: border-box;
       position: relative;
@@ -77,10 +76,6 @@
       -o-transform: scale(0);
       transform: scale(0);
       overflow: hidden; }
-    .seoclick-forms-popup-wrap .modal-wrap > div > div:not(.modal-background) {
-      width: 100%;
-      height: calc(100% - 1.875rem);
-      overflow-y: auto; }
   .seoclick-forms-popup-wrap .active {
     -webkit-transform: scale(1) !important;
     -moz-transform: scale(1) !important;
