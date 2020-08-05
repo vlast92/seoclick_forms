@@ -68,8 +68,9 @@ $form_id = "seoclick_form_". $module->id . "_" . rand(1, 10000);
 	    if ($joomlaRecapchaEnabled)
 	    {
 		    require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'field_recaptcha');
-	    } ?>
-        <input type="hidden" name="module-name" value="<?= htmlspecialchars($module->title) ?>"/>
+	    }
+	    require JModuleHelper::getLayoutPath('mod_seoclick_forms', 'field_module_id');
+	    ?>
     </form>
 </div>
 <?php

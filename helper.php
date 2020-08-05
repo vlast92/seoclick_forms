@@ -95,7 +95,7 @@ class ModSeoclickFormsHelper
 	 */
 	private static function getModuleParams()
 	{
-		$module             = JModuleHelper::getModule('seoclick_forms', self::$formData['module-name']);
+		$module             = JModuleHelper::getModuleById(self::$formData['module-id']);
 		$params             = new JRegistry();
 		self::$moduleParams = $params->loadString($module->params);
 	}

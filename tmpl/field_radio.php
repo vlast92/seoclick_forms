@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     ${NAMESPACE}
- * @subpackage
+ * @package     seoclick_forms
+ * @subpackage  tmp
  *
  * @copyright   A copyright
  * @license     A "Slug" license name e.g. GPL2
@@ -16,7 +16,7 @@ $radioButtons = explode("\r\n", $formField['radio_buttons']);
 foreach ($radioButtons as $key => $radioButton)
 {
 	$buttons[$key] = JHTML::_('select.option', $radioButton, $radioButton);
-	$buttons[$key]->id = $name . $key;
+	$buttons[$key]->id = $name . $key . $module->id;
 }
 
 $attribs['class'] = "advancedRadio";

@@ -1,7 +1,7 @@
 <?php
 /**
- * @package     ${NAMESPACE}
- * @subpackage
+ * @package     seoclick-forms
+ * @subpackage  tmp
  *
  * @copyright   A copyright
  * @license     A "Slug" license name e.g. GPL2

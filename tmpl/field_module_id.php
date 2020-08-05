@@ -9,4 +9,4 @@
 
 defined('_JEXEC') or die;?>
 
-<div class="text-field"><?=nl2br($formText);?></div>
+<input type="hidden" name="module-id" value="<?=$module->id?>"/>
