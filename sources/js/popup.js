@@ -1,14 +1,11 @@
 jQuery(document).ready(function ($) {
 
-    let formContainers = $(".seoclick-forms-popup-wrap"),//контейнер формы
+    let formContainer = $(".seoclick-forms-popup-wrap"),//контейнер формы
         show_button = $(".seoclickFormsShowpopUpForm");//кнопка показа формы
 
-    $("body").append(formContainers);
-    formContainers.each(function (index, formContainer) {
-        $(formContainer).children().wrapAll('<div class="modal-wrap"></div>').append('<span class="close-button"><img src="/modules/mod_seoclick_forms/assets/close.svg" alt="close"/></span>');
-    });
+    $("body").append(formContainer);
+    formContainer.children().wrapAll('<div class="modal-wrap"></div>').append('<span class="close-button"><img src="/modules/mod_seoclick_forms/assets/close.svg" alt="close"/></span>');
     $(".modal-wrap").append('<div class="close-background"></div>');
-
     //Обработчики скрытия форм
     $('.close-button').on("click", closeModal);
     $('.close-background').on("click", closeModal);
