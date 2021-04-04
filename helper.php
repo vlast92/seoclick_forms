@@ -12,7 +12,7 @@ class ModSeoclickFormsHelper
 {
 	static private $formData, $moduleParams, $email,
 		$sitePattern = '/^[\w \W]+[\.]{1}[\D]{2,4}$/',
-		$phonePattern = '/^[\+ \- \( \d \) \s]{7,}/',
+		$phonePattern = '/^[\+ \- \( \d \) \s]{7,}$/',
 		$emailPattern = '/^[\w \W]+[@]{1}[\w \W]+[\.]{1}[\D]{2,4}$/';
 
 	/*
