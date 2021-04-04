@@ -13,3 +13,8 @@ defined('_JEXEC') or die;
 <span class="fieldName">
 	<?= $formField['label']; ?>
 </span>
+<input
+        name="<?= $name; ?>"
+        type="hidden"
+        value="line-text"
+/>
